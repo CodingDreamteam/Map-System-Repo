@@ -1,0 +1,26 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="stylesheet" type="text/css" href="../../resources/styles/home.style.css"?>
+<zk>
+
+  <borderlayout id="homeLayout" apply="" vflex="1">
+
+    <north id="northContent" height="100px" border="none" >
+        
+      <include id="includeNorthContent" src="/views/banner/banner.authenticated.zul"/>
+            
+    </north>
+    
+    <center id="mainContent" autoscroll="true" border="none">
+            
+      
+    </center>
+    
+    <south id="southContent" height="50px" border="none">
+        
+      <include id="includeSouthContent" src="/views/footer/footer.authenticated.zul"/>
+        
+    </south>
+        
+  </borderlayout>
+
+</zk>

@@ -1,0 +1,15 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk>
+
+  <div hflex="1" vflex="1" sclass="footer">
+  
+    <vbox hflex="1" vflex="1" align="center">
+  
+      <label value="[modificar footer]"/>
+      <a href="http://www.google.com">http://www.google.com</a>
+    
+    </vbox>
+  
+  </div>
+  
+</zk>
