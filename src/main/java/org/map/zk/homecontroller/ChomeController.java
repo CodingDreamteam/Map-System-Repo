@@ -3,6 +3,7 @@ package org.map.zk.homecontroller;
 import java.util.LinkedList;
 //
 import org.map.zk.systemconstans.SystemConstants;
+import org.map.zk.utilities.CSystemUtilities;
 import org.map.zk.database.datamodel.TBLUser;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Session;
@@ -36,40 +37,44 @@ public class ChomeController extends SelectorComposer<Component> {
     public void initControllerLoggerAndControllerLanguage( String RunningPath, Session currentSession ) {
         
      
-        CExtendedConfigLogger extendedConfigLogger = SystemUtilities.initLoggerConfig( RunningPath, currentSession );
+        CExtendedConfigLogger extendedConfigLogger = CSystemUtilities.initLoggerConfig( RunningPath, currentSession );
 
     
         TBLUser operatorCredential = (TBLUser) currentSession.getAttribute( SystemConstants._Operator_Credential_Session_Key );
 
         
-        String Operator = SystemConstants._Operator_Unknown; //Esto es un valor por defecto no debería quedar con el pero si lo hacer el algoritmo no falla
-        String LoginDateTime = (String) currentSession.getAttribute( SystemConstants._Login_Date_Time_Session_Key ); //Recuperamos información de fecha y hora del inicio de sesión Login
-        String LogPath = (String) currentSession.getAttribute( SystemConstants._Log_Path_Session_Key ); //Recuperamos el path donde se guardarn los log ya que cambia según el nombre de l operador que inicie sesion  
+        String strOperator = SystemConstants._Operator_Unknown; //Esto es un valor por defecto no debería quedar con el pero si lo hacer el algoritmo no falla
+        String strLoginDateTime = (String) currentSession.getAttribute( SystemConstants._Login_Date_Time_Session_Key ); //Recuperamos información de fecha y hora del inicio de sesión Login
+        String strLogPath = (String) currentSession.getAttribute( SystemConstants._Log_Path_Session_Key ); //Recuperamos el path donde se guardarn los log ya que cambia según el nombre de l operador que inicie sesion  
 
         if ( operatorCredential != null )
-            Operator = operatorCredential.getName();  //Obtenemos el nombre del operador que hizo login
+            strOperator = operatorCredential.getName();  //Obtenemos el nombre del operador que hizo login
 
-        if ( LoginDateTime == null ) //En caso de ser null no ha fecha y hora de inicio de sesión colocarle una por defecto
-            LoginDateTime = Utilities.getDateInFormat( ConstantsCommonClasses._Global_Date_Time_Format_File_System_24, null );
+        if ( strLoginDateTime == null ) //En caso de ser null no ha fecha y hora de inicio de sesión colocarle una por defecto
+            strLoginDateTime = Utilities.getDateInFormat( ConstantsCommonClasses._Global_Date_Time_Format_File_System_24, null );
 
         final String LoggerName = SystemConstants._Home_Controller_Logger_Name;
         final String LoggerFileName = SystemConstants._Home_Controller_File_Log;
         
-        controllerLogger = CExtendedLogger.getLogger( LoggerName + " " + Operator + " " + LoginDateTime );
+        controllerLogger = CExtendedLogger.getLogger( LoggerName + " " + strOperator + " " + strLoginDateTime );
        
         if ( controllerLogger.getSetupSet() == false ) {
 
-            if ( LogPath == null )
-                LogPath = RunningPath + "/" + SystemConstants._Logs_Dir;
+            if ( strLogPath == null )
+               
+            	strLogPath = RunningPath + "/" + SystemConstants._Logs_Dir;
 
           
             if ( extendedConfigLogger != null )
-                controllerLogger.setupLogger( Operator + " " + LoginDateTime, false, LogPath, LoggerFileName, extendedConfigLogger.getClassNameMethodName(), extendedConfigLogger.getExactMatch(), extendedConfigLogger.getLevel(), extendedConfigLogger.getLogIP(), extendedConfigLogger.getLogPort(), extendedConfigLogger.getHTTPLogURL(), extendedConfigLogger.getHTTPLogUser(), extendedConfigLogger.getHTTPLogPassword(), extendedConfigLogger.getProxyIP(), extendedConfigLogger.getProxyPort(), extendedConfigLogger.getProxyUser(), extendedConfigLogger.getProxyPassword() );
-            else   
-                controllerLogger.setupLogger( Operator + " " + LoginDateTime, false, LogPath, LoggerFileName,SystemConstants.LOG_CLASS_METHOD, SystemConstants.LOG_EXACT_MATCH, SystemConstants.log_level, "", -1, "", "", "", "", -1, "", "" );
+             
+            	controllerLogger.setupLogger( strOperator + " " + strLoginDateTime, false, strLogPath, LoggerFileName, extendedConfigLogger.getClassNameMethodName(), extendedConfigLogger.getExactMatch(), extendedConfigLogger.getLevel(), extendedConfigLogger.getLogIP(), extendedConfigLogger.getLogPort(), extendedConfigLogger.getHTTPLogURL(), extendedConfigLogger.getHTTPLogUser(), extendedConfigLogger.getHTTPLogPassword(), extendedConfigLogger.getProxyIP(), extendedConfigLogger.getProxyPort(), extendedConfigLogger.getProxyUser(), extendedConfigLogger.getProxyPassword() );
+            
+            else
+            	
+                controllerLogger.setupLogger( strOperator + " " + strLoginDateTime, false, strLogPath, LoggerFileName,SystemConstants.LOG_CLASS_METHOD, SystemConstants.LOG_EXACT_MATCH, SystemConstants.log_level, "", -1, "", "", "", "", -1, "", "" );
 
             //Inicializamos el lenguage para ser usado por el logger
-            controllerLanguage = CLanguage.getLanguage( controllerLogger, RunningPath + SystemConstants._Langs_Dir + LoggerName + "." + SystemConstants._Lang_Ext ); 
+                controllerLanguage = CLanguage.getLanguage( controllerLogger, RunningPath + SystemConstants._Langs_Dir + LoggerName + "." + SystemConstants._Lang_Ext ); 
 
             //Protección para el multi hebrado, puede que dos usuarios accedan exactamente al mismo tiempo a la página web, este código en el servidor se ejecuta en dos hebras
             synchronized( currentSession ) { 
@@ -83,7 +88,7 @@ public class ChomeController extends SelectorComposer<Component> {
                     synchronized( loggedSessionLoggers ) {
 
                         //Lo agregamos a la lista
-                        loggedSessionLoggers.add( LoggerName + " " + Operator + " " + LoginDateTime );
+                        loggedSessionLoggers.add( LoggerName + " " + strOperator + " " + strLoginDateTime );
 
                     }
 
@@ -100,7 +105,9 @@ public class ChomeController extends SelectorComposer<Component> {
       
       @Listen("onClick= #includeNorthContent #BLogout")
       public void onClicLogout(Event event){
-	       System.out.println("Logout");
+	
+    	  System.out.println("Logout");
+      
       }
 	
 }
