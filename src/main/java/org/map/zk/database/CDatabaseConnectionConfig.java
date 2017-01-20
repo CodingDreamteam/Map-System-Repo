@@ -20,6 +20,10 @@ public class CDatabaseConnectionConfig implements Serializable {
     protected String User=null;
     protected String Password=null;
     
+    public CDatabaseConnectionConfig() {
+        
+    }
+
     public CDatabaseConnectionConfig (String lDriver, String lPrefix, String lHost, String lPort, String lDatabase, String lUser, String lPassword) {
         this.Driver = lDriver; 
         this.Prefix =lPrefix;
