@@ -21,9 +21,9 @@ public class PersonDAO {
         TBLPerson result = null;
         
         try {
-            if ( dbConnection != null && dbConnection.getConnection() ) {
+            if ( dbConnection != null && dbConnection.getDatabaseConnection()!=null ) {
                 
-                Statement statement = dbConnection.getConnection().createStatement;
+                Statement statement = dbConnection.getDatabaseConnection().createStatement();
                 
                 ResultSet resultSet = statement.executeQuery( "SELECT * FROM tblperson WHERE ID = '" + strID + "'" );
                 
@@ -69,15 +69,15 @@ public class PersonDAO {
         
         try {
             
-            if ( dbConnection != null && dbConnection.getConnection() != null ) {
+            if ( dbConnection != null && dbConnection.getDatabaseConnection() != null ) {
                 
                 final String strSQL = "Insert Into tblperson(ID, FirstName, LastName, Gender, BirthDate, Comment, CreatedBy, CreatedAtDate, CreatedAtTime) Values ('" + tblPerson.getID() + "', '" +tblPerson.getFirstName()+"',' " + tblPerson.getLastName() + "', " + tblPerson.getGender() + ", '" + tblPerson.getBirthdate().toString() + "', '" + tblPerson.getComment() + "', 'root', '" + LocalDate.now().toString() + "', '" + LocalTime.now().toString() + "')";
                 
-                Statement statement = dbConnection.getConnection().createStatement();
+                Statement statement = dbConnection.getDatabaseConnection().createStatement();
                 
                 statement.executeUpdate( strSQL );
                 
-                dbConnection.getConnection().commit();
+                dbConnection.getDatabaseConnection().commit();
                 
                 bresult = true;
                 
@@ -88,11 +88,11 @@ public class PersonDAO {
         
         catch ( Exception ex ) {
             
-            if ( dbConnection != null && dbConnection.getConnection() != null ) {
+            if ( dbConnection != null && dbConnection.getDatabaseConnection() != null ) {
                 
                 try {
                     
-                    dbConnection.getConnection().rollback();
+                    dbConnection.getDatabaseConnection().rollback();
                     
                 }
                 
@@ -125,15 +125,15 @@ public class PersonDAO {
         
         try {
             
-            if ( dbConnection != null && dbConnection.getConnection() != null ) {
+            if ( dbConnection != null && dbConnection.getDatabaseConnection() != null ) {
                 
                 final String strSQL = "Delete FROM tblperson Where ID = '" + strID + "'";
                 
-                Statement statement = dbConnection.getConnection().createStatement();
+                Statement statement = dbConnection.getDatabaseConnection().createStatement();
                 
                 statement.executeUpdate( strSQL );
                 
-                dbConnection.getConnection().commit();
+                dbConnection.getDatabaseConnection().commit();
                 
                 bresult = true;
                 
@@ -143,11 +143,11 @@ public class PersonDAO {
         }
         catch ( Exception ex ) {
             
-            if ( dbConnection != null && dbConnection.getConnection() != null ) {
+            if ( dbConnection != null && dbConnection.getDatabaseConnection() != null ) {
                 
                 try {
                     
-                    dbConnection.getConnection().rollback();
+                    dbConnection.getDatabaseConnection().rollback();
                     
                 }
                 
@@ -180,15 +180,15 @@ public class PersonDAO {
         
         try {
             
-            if ( dbConnection != null && dbConnection.getConnection() != null ) {
+            if ( dbConnection != null && dbConnection.getDatabaseConnection() != null ) {
                 
                 final String strSQL = "Update tblperson Set ID = '" + tblPerson.getID() + "', FirstName = '"+ tblPerson.getFirstName() + "', LastName = '" + tblPerson.getLastName() + "', Gender = " + tblPerson.getGender() + ", BirthDate = '" + tblPerson.getBirthdate().toString() + "', Comment = '" + tblPerson.getComment() + "', UpdatedBy = 'root', UpdatedAtDate = '" + LocalDate.now().toString() + "', UpdatedAtTime = '" + LocalTime.now().toString() + "' Where ID = '" + tblPerson.getID() + "'";
                
-                Statement statement = dbConnection.getConnection().createStatement();
+                Statement statement = dbConnection.getDatabaseConnection().createStatement();
                 
                 statement.executeUpdate( strSQL );
                 
-                dbConnection.getConnection().commit();
+                dbConnection.getDatabaseConnection().commit();
                 
                 bresult = true;
                 
@@ -198,11 +198,11 @@ public class PersonDAO {
         }
         catch ( Exception ex ) {
             
-            if ( dbConnection != null && dbConnection.getConnection() != null ) {
+            if ( dbConnection != null && dbConnection.getDatabaseConnection() != null ) {
                 
                 try {
                     
-                    dbConnection.getConnection().rollback();
+                    dbConnection.getDatabaseConnection().rollback();
                     
                 }
                 
@@ -236,9 +236,9 @@ public class PersonDAO {
         
         try {
             
-            if ( dbConnection != null && dbConnection.getConnection() != null ) {
+            if ( dbConnection != null && dbConnection.getDatabaseConnection() != null ) {
                 
-                Statement statement = dbConnection.getConnection().createStatement();
+                Statement statement = dbConnection.getDatabaseConnection().createStatement();
                 
                 ResultSet resultSet = statement.executeQuery( "SELECT * FROM tblperson" );
                 

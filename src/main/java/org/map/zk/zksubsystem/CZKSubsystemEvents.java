@@ -1,5 +1,6 @@
 package org.map.zk.zksubsystem;
 
+import org.map.zk.systemconstans.SystemConstants;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.WebApp;
 import org.zkoss.zk.ui.util.SessionCleanup;
@@ -43,11 +44,11 @@ public class CZKSubsystemEvents implements SessionInit, SessionCleanup, WebAppIn
         
         try {
             
-            String strRunningPath = webApp.getRealPath(SystemConstants._WEB_INF_Dir)  + "/";
+            String strRunningPath = webApp.getRealPath(SystemConstants._WEB_INF_DIR)  + "/";
             
             CExtendedConfigLogger configLogger = new CExtendedConfigLogger();
             
-            String strConfigPath = strRunningPath + SystemConstants._Config_Dir + SystemConstants._Logger_Config_File_Name;
+            String strConfigPath = strRunningPath + SystemConstants._CONFIG_DIR + SystemConstants._Logger_Config_Name;
             
             if (configLogger.loadConfig( strConfigPath, null, null )){
                 

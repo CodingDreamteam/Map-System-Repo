@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Map;
 
 import org.map.zk.database.datamodel.TBLUser;
+import org.map.zk.systemconstans.SystemConstants;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Page;
 import org.zkoss.zk.ui.Session;
@@ -23,19 +24,19 @@ public class CSecurity implements Initiator {
     
     public static void detectAuthenticatedAndRedirect( Page page, Map<String, Object> args ) {
         
-        CExtendedLogger extendedLogger = CExtendedLogger.getLogger( SystemConstants._Check_Logged_Logger_Name );
+        CExtendedLogger extendedLogger = CExtendedLogger.getLogger( SystemConstants.CHECK_LOGGED_LOGGER_NAME );
         
-        String strRunningPath = Sessions.getCurrent().getWebApp().getRealPath( SystemConstants._WEB_INF_Dir ) + File.separator;
+        String strRunningPath = Sessions.getCurrent().getWebApp().getRealPath( SystemConstants._WEB_INF_DIR ) + File.separator;
         
         if ( extendedLogger != null && extendedLogger.getSetupSet() == false ) {
             
             String strLogPath = strRunningPath + SystemConstants._Logs_Dir + SystemConstants._Security_Dir;
             
-            extendedLogger.setupLogger( SystemConstants._Check_Logged_Logger_Name, false, strLogPath, SystemConstants._Check_Logged_File_Log, SystemConstants._Log_Class_Method, SystemConstants._Log_Exact_Match, SystemConstants._Log_Level, "", -1, "", "", "", "", -1, "", "" );
+            extendedLogger.setupLogger( SystemConstants.CHECK_LOGGED_LOGGER_NAME, false, strLogPath, SystemConstants.CHECK_LOGGED_LOGGER_NAME, SystemConstants.LOG_CLASS_METHOD, SystemConstants.LOG_EXACT_MATCH, SystemConstants.log_level, "", -1, "", "", "", "", -1, "", "" );
             
         }
         
-        CLanguage languaje = CLanguage.getLanguage( extendedLogger, strRunningPath + SystemConstants._Langs_Dir + SystemConstants._Security_Dir + SystemConstants._Check_Logged_Logger_Name + "." + SystemConstants._Lang_Ext );
+        CLanguage languaje = CLanguage.getLanguage( extendedLogger, strRunningPath + SystemConstants._Langs_Dir + SystemConstants._Security_Dir + SystemConstants.CHECK_LOGGED_LOGGER_NAME + "." + SystemConstants._Lang_Ext );
         
         Session currentSession = Sessions.getCurrent();
         

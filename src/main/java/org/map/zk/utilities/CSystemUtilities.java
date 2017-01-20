@@ -1,5 +1,6 @@
 package org.map.zk.utilities;
 
+import org.map.zk.systemconstans.SystemConstants;
 import org.zkoss.zk.ui.Session;
 
 import commonlibs.extendedlogger.CExtendedConfigLogger;
@@ -15,11 +16,11 @@ public class CSystemUtilities {
             
             result = new CExtendedConfigLogger();
             
-            String strConfigPath = strRunningPath + SystemConstants._Config_Dir;
+            String strConfigPath = strRunningPath + SystemConstants._CONFIG_DIR;
             
             CExtendedLogger webAppLogger = CExtendedLogger.getLogger( SystemConstants._Webapp_Logger_Name );
             
-            if ( result.loadConfig( strConfigPath + SystemConstants._Logger_Config_File_Name, webAppLogger, null ) == false ) {
+            if ( result.loadConfig( strConfigPath + SystemConstants._Logger_Config_Name, webAppLogger, null ) == false ) {
                 
                 result = null;
                 
