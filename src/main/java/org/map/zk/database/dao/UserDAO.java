@@ -9,8 +9,6 @@ import java.util.List;
 
 import org.map.zk.database.CDatabaseConnection;
 import org.map.zk.database.datamodel.TBLUser;
-import com.mysql.jdbc.integration.jboss.ExtendedMysqlExceptionSorter;
-
 import commonlibs.commonclasses.CLanguage;
 import commonlibs.extendedlogger.CExtendedLogger;
 
@@ -241,7 +239,7 @@ public class UserDAO  {
     
     
     
-    public static TBLUser checkData( final CDatabaseConnection dbConnection, final String strID, CExtendedLogger localLogger, CLanguage localLanguage ) {
+    public static TBLUser checkData( final CDatabaseConnection dbConnection, final String strUser, final String strPassword, CExtendedLogger localLogger, CLanguage localLanguage ) {
         
         TBLUser result = null;
         try {
@@ -249,7 +247,7 @@ public class UserDAO  {
                 
                 Statement statement = dbConnection.getDatabaseConnection().createStatement();
                 
-                ResultSet resultSet = statement.executeQuery( "SELECT * FROM tbloperator WHERE ID = '" + strID + "' AND DisabledBy <=> null AND DisabledAtDate <=> null AND DisabledAtTime <=> null" );
+                ResultSet resultSet = statement.executeQuery( "SELECT * FROM tbloperator WHERE Name = '" + strUser + "' AND Password = '" + strPassword + "' AND DisabledBy <=> null AND DisabledAtDate <=> null AND DisabledAtTime <=> null" );
                 
                 if ( resultSet.next() ) {
                     
