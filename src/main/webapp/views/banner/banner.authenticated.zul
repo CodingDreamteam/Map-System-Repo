@@ -14,7 +14,8 @@
                     <space bar="false" spacing="20px" />
                     <button id="buttonChangePassword" label="Change password" />
                     <button id="buttonLogout" label="Logout" />
-                    <space bar="false" spacing="5px" />
+                    <button id="buttonManager" label="Manager"/>
+                    <space bar="false" spacing="5px" />                    
                 </hbox>
             </vbox>
         </hbox>

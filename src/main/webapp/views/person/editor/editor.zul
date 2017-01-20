@@ -17,8 +17,8 @@
                         </textbox>
                     </row>
                     <row>
-                        <label id="labelNombre" value="Nombre" width="150px" />
-                        <textbox id="textboxNombre" value="" width="250px" tabindex="2">
+                        <label id="labelFirstName" value="First Name" width="150px" />
+                        <textbox id="textboxFirstName" value="" width="250px" tabindex="2">
                         <attribute w:name="doKeyPress_">
                                 
                                 <![CDATA[ function(evt) { if (!this._shallIgnore(evt, "qwertyuiopasdfghjklñzxcvbnmQWERTYUIOPASDFGHJKLÑZXCVBNM ")) this.$doKeyPress_(evt); } ]]>
@@ -29,8 +29,8 @@
                         </textbox>
                     </row>
                     <row>
-                        <label id="labelApellido" value="Apellido" width="150px" />
-                        <textbox id="textboxApellido" value="" width="250px" tabindex="3">
+                        <label id="labelLastName" value="Last Name" width="150px" />
+                        <textbox id="textboxLastName" value="" width="250px" tabindex="3">
                         <attribute w:name="doKeyPress_">
                                 
                                 <![CDATA[ function(evt) { if (!this._shallIgnore(evt, "qwertyuiopasdfghjklñzxcvbnmQWERTYUIOPASDFGHJKLÑZXCVBNM ")) this.$doKeyPress_(evt); } ]]>
@@ -41,8 +41,8 @@
                         </textbox>
                     </row>
                     <row>
-                        <label id="labelTelefono" value="Teléfono" width="150px" />
-                        <textbox id="textboxTelefono" value="" width="250px" tabindex="4">
+                        <label id="labelPhone" value="Phone number" width="150px" />
+                        <textbox id="textboxPhone" value="" width="250px" tabindex="4">
                         <attribute w:name="doKeyPress_">
                                 
                                 <![CDATA[ function(evt) { if (!this._shallIgnore(evt, "0123456789")) this.$doKeyPress_(evt); } ]]>
@@ -53,8 +53,8 @@
                         </textbox>
                     </row>
                     <row>
-                        <label id="labelFecha" value="Fecha" width="150px" />
-                        <datebox id="dateboxFecha" width="250px" tabindex="5">
+                        <label id="labelBirthdate" value="Birthdate" width="150px" />
+                        <datebox id="dateboxBirthdate" width="250px" tabindex="5">
                         <attribute w:name="doKeyPress_">
                                 
                                 <![CDATA[ function(evt) { if (!this._shallIgnore(evt, "0123456789")) this.$doKeyPress_(evt); } ]]>
@@ -65,18 +65,18 @@
                         </datebox>
                     </row>
                     <row>
-                        <label id="labelGenero" value="Género" width="150px" />
-                        <selectbox id="selectboxGenero" />
+                        <label id="labelGender" value="Gender" width="150px" />
+                        <selectbox id="selectboxGender" />
                     </row>
                     <row>
-                        <label id="labelComentario" value="Comentario" width="150px" />
-                        <textbox id="textboxComentario" value="[Ingrese un comentario sobre esta persona]" width="250px" tabindex="6" rows="10" />
+                        <label id="labelComment" value="Comment" width="150px" />
+                        <textbox id="textboxComment" value="[Add a comment about this person]" width="250px" tabindex="6" rows="10" />
                     </row>
                 </rows>
             </grid>
             <div id="buttoncontainer">
-                <button id="buttonGuardar" label="Guardar Datos" style="float:right;margin-left:15px"></button>
-                <button id="buttonCancelar" label="Cancelar" style="float:right;margin-left:15px"></button>
+                <button id="buttonSave" label="Save Data" style="float:right;margin-left:15px"></button>
+                <button id="buttonCancel" label="Cancel" style="float:right;margin-left:15px"></button>
             </div>
         </vlayout>
     </window>

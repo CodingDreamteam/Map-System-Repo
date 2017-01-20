@@ -6,7 +6,7 @@
     <vbox hflex="1" vflex="1" align="center">
   
       <label value="[modificar footer]"/>
-      <a href="http://www.lutorcorp.com">http://www.lutorcorp.com</a>
+      <a href="http://www.google.com">http://www.google.com</a>
     
     </vbox>
   

@@ -5,20 +5,20 @@
             <listbox id="listboxPersons" width="100%" height="360px">
             <listhead width="100%" height="100%">
             <listheader label="Ci" width="100px"></listheader>
-            <listheader label="Nombre" width="100px"></listheader>
-            <listheader label="Apellido" width="100px"></listheader>
-            <listheader label="Teléfono" width="100px"></listheader>
-            <listheader label="Género" width="100px"></listheader>
-            <listheader label="Cumpleaños" width="100px"></listheader>
-            <listheader label="Comentario" width="100px"> </listheader>           
+            <listheader label="First Name" width="100px"></listheader>
+            <listheader label="Last Name" width="100px"></listheader>
+            <listheader label="Phone Number" width="100px"></listheader>
+            <listheader label="Gender" width="100px"></listheader>
+            <listheader label="Birthdate" width="100px"></listheader>
+            <listheader label="Comment" width="100px"> </listheader>           
             </listhead>
             </listbox>
             <div id="buttoncontainer">
-                <button id="buttonConnection" label="Conectar"></button>
-                <button id="buttonCargar" label="Cargar"></button>
-                <button id="buttonDelete" label="Borrar" style="float:right;margin-left:15px"></button>
-                <button id="buttonModify" label="Modificar" style="float:right;margin-left:15px"></button>
-                <button id="buttonAdd" label="Añadir" style="float:right;margin-left:15px"></button>
+                <button id="buttonConnection" label="Connect"></button>
+                <button id="buttonLoad" label="Load"></button>
+                <button id="buttonDelete" label="Delete" style="float:right;margin-left:15px"></button>
+                <button id="buttonModify" label="Modify" style="float:right;margin-left:15px"></button>
+                <button id="buttonAdd" label="Add" style="float:right;margin-left:15px"></button>
             </div>            
         </vlayout>
     </window>
