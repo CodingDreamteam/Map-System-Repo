@@ -74,15 +74,15 @@ public class UserDAO  {
         
         try {
             
-            if ( dbConnection != null && dbConnection.getDbconnection() != null ) {
+            if ( dbConnection != null && dbConnection.getConnection() != null ) {
                 
                 final String strSQL = "INSERT INTO tbloperator (ID, Name, Role, Password, Comment, CreatedBy, CreatedAtDate, CreatedAtTime) VALUES ('" + tblUser.getID() + "', '" + tblUser.getName() + "',' " + tblUser.getRole() + "',' " + tblUser.getPassword() + "', " + tblUser.getComment() + "', 'root', '" + LocalDate.now().toString() + "', '" + LocalTime.now().toString() + "' )";
                 
-                Statement statement = dbConnection.getDbconnection().createStatement();
+                Statement statement = dbConnection.getConnection().createStatement();
                 
                 statement.executeUpdate( strSQL );
                 
-                dbConnection.getDbconnection().commit();
+                dbConnection.getConnection().commit();
                 
                 bresult = true;
                 
@@ -93,11 +93,11 @@ public class UserDAO  {
         
         catch ( Exception ex ) {
             
-            if ( dbConnection != null && dbConnection.getDbconnection() != null ) {
+            if ( dbConnection != null && dbConnection.getConnection() != null ) {
                 
                 try {
                     
-                    dbConnection.getDbconnection().rollback();
+                    dbConnection.getConnection().rollback();
                     
                 }
                 
@@ -130,15 +130,15 @@ public class UserDAO  {
         
         try {
             
-            if ( dbConnection != null && dbConnection.getDbconnection() != null ) {
+            if ( dbConnection != null && dbConnection.getConnection() != null ) {
                 
-                final String strSQL = "Delete * FROM tbloperator Where ID = '" + strID + "'";
+                final String strSQL = "Delete FROM tbloperator Where ID = '" + strID + "'";
                 
-                Statement statement = dbConnection.getDbconnection().createStatement();
+                Statement statement = dbConnection.getConnection().createStatement();
                 
                 statement.executeUpdate( strSQL );
                 
-                dbConnection.getDbconnection().commit();
+                dbConnection.getConnection().commit();
                 
                 bresult = true;
                 
@@ -148,11 +148,11 @@ public class UserDAO  {
         }
         catch ( Exception ex ) {
             
-            if ( dbConnection != null && dbConnection.getDbconnection() != null ) {
+            if ( dbConnection != null && dbConnection.getConnection() != null ) {
                 
                 try {
                     
-                    dbConnection.getDbconnection().rollback();
+                    dbConnection.getConnection().rollback();
                     
                 }
                 
@@ -185,7 +185,7 @@ public class UserDAO  {
         
         try {
             
-            if ( dbConnection != null && dbConnection.getDbconnection() != null ) {
+            if ( dbConnection != null && dbConnection.getConnection() != null ) {
                 
                 final String strDisabledAtDate = "', DisabledAtDate = " + tblUser.getDisabledAtDate() != null ? "'" + LocalDate.now().toString() + "'" : "null";
                 
@@ -194,11 +194,11 @@ public class UserDAO  {
                 final String strSQL = "Update tbloperator Set ID = '" + tblUser.getID() + "', Name = '"+ tblUser.getName() + "', Role = '"+ tblUser.getRole() + "', Password = '" + tblUser.getPassword() + "', Comment = '" + tblUser.getComment() + "', UpdatedBy = 'root', UpdatedAtDate = '" + LocalDate.now().toString() + "', UpdatedAtTime = '" + LocalTime.now().toString() + "', DiseabledBy = '" + tblUser.getDisabledBy() + strDisabledAtDate + strDisabledAtTime + " Where ID = '" + tblUser.getID() + "'";   
 
                 
-                Statement statement = dbConnection.getDbconnection().createStatement();
+                Statement statement = dbConnection.getConnection().createStatement();
                 
                 statement.executeUpdate( strSQL );
                 
-                dbConnection.getDbconnection().commit();
+                dbConnection.getConnection().commit();
                 
                 bresult = true;
                 
@@ -208,11 +208,11 @@ public class UserDAO  {
         }
         catch ( Exception ex ) {
             
-            if ( dbConnection != null && dbConnection.getDbconnection() != null ) {
+            if ( dbConnection != null && dbConnection.getConnection() != null ) {
                 
                 try {
                     
-                    dbConnection.getDbconnection().rollback();
+                    dbConnection.getConnection().rollback();
                     
                 }
                 
@@ -300,7 +300,7 @@ public class UserDAO  {
                 
                 final String strSQL = "UPDATE tbloperator SET LastLoginAtDate = '" + LocalDate.now().toString() + "', LastLoginAtTime = '" + LocalTime.now().toString() + "' WHERE ID = '" + strID + "'";
                 
-                Statement statement = dbConnection.getDbconnection().createStatement();
+                Statement statement = dbConnection.getConnection().createStatement();
                 
                 statement.executeUpdate( strSQL );
                 
@@ -312,11 +312,11 @@ public class UserDAO  {
         }
         catch ( Exception ex ) {
             
-            if ( dbConnection != null && dbConnection.getDbconnection() != null ) {
+            if ( dbConnection != null && dbConnection.getConnection() != null ) {
                 
                 try {
                     
-                    dbConnection.getDbconnection().rollback();
+                    dbConnection.getConnection().rollback();
                     
                 }
                 
@@ -350,7 +350,7 @@ public class UserDAO  {
                 
                 final String strSQL = "UPDATE tbloperator SET DisabledBy = 'root', DisabledAtDate = '" + LocalDate.now().toString() + "', DisabledAtTime = '" + LocalTime.now().toString() + "' WHERE ID = '" + strID + "'";
                 
-                Statement statement = dbConnection.getDbconnection().createStatement();
+                Statement statement = dbConnection.getConnection().createStatement();
                 
                 statement.executeUpdate( strSQL );
                 
@@ -363,11 +363,11 @@ public class UserDAO  {
         }
         catch ( Exception ex ) {
             
-            if ( dbConnection != null && dbConnection.getDbconnection() != null ) {
+            if ( dbConnection != null && dbConnection.getConnection() != null ) {
                 
                 try {
                     
-                    dbConnection.getDbconnection().rollback();
+                    dbConnection.getConnection().rollback();
                     
                 }
                 
@@ -402,7 +402,7 @@ public class UserDAO  {
                 
                 final String strSQL = "UPDATE tbluser SET DisabledBy = null, DisabledAtDate = null, DisabledAtTime = null WHERE User = '" + strUser + "'";
                 
-                Statement statement = dbConnection.getDbconnection().createStatement();
+                Statement statement = dbConnection.getConnection().createStatement();
                 
                 statement.executeUpdate( strSQL );
                 
@@ -417,11 +417,11 @@ public class UserDAO  {
         
         catch ( Exception ex ) {
             
-            if ( dbConnection != null && dbConnection.getDbconnection() != null ) {
+            if ( dbConnection != null && dbConnection.getConnection() != null ) {
                 
                 try {
                     
-                    dbConnection.getDbconnection().rollback();
+                    dbConnection.getConnection().rollback();
                     
                 }
                 

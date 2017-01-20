@@ -21,13 +21,13 @@ public class TBLPerson implements Serializable {
     protected LocalDate updatedAtDate;
     protected LocalTime updatedAtTime;
     
-    public String getStrID() {
+    public String getID() {
         
         return strID;
         
     }
     
-    public void setStrID( String strID ) {
+    public void setID( String strID ) {
         
         this.strID = strID;
         
@@ -79,13 +79,13 @@ public class TBLPerson implements Serializable {
         
     }
     
-    public String getStrcomment() {
+    public String getComment() {
         
         return strComment;
         
     }
     
-    public void setcomment( String strComment ) {
+    public void setComment( String strComment ) {
         
         this.strComment = strComment;
         
