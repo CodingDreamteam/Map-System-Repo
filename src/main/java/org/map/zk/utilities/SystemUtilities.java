@@ -6,7 +6,7 @@ import org.zkoss.zk.ui.Session;
 import commonlibs.extendedlogger.CExtendedConfigLogger;
 import commonlibs.extendedlogger.CExtendedLogger;
 
-public class CSystemUtilities {
+public class SystemUtilities {
     
     public static CExtendedConfigLogger initLoggerConfig( String strRunningPath, Session currentSession ) {
         

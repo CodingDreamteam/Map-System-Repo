@@ -78,6 +78,7 @@ public class CSecurity implements Initiator {
         else if ( strRequestPath.isEmpty() || strRequestPath.contains( "/home.zul" ) == false ) {
             
             String strRedirectPath = "/views/home/home.zul";
+           
             if ( extendedLogger != null )
                 extendedLogger.logMessage( "1", languaje.translate( "Redirecting to [%s]", strRedirectPath ) );
             
