@@ -41,18 +41,6 @@
                         </textbox>
                     </row>
                     <row>
-                        <label id="labelPhone" value="Phone number" width="150px" />
-                        <textbox id="textboxPhone" value="" width="250px" tabindex="4">
-                        <attribute w:name="doKeyPress_">
-                                
-                                <![CDATA[ function(evt) { if (!this._shallIgnore(evt, "0123456789")) this.$doKeyPress_(evt); } ]]>
-                                
-                            
-                            
-                        </attribute>
-                        </textbox>
-                    </row>
-                    <row>
                         <label id="labelBirthdate" value="Birthdate" width="150px" />
                         <datebox id="dateboxBirthdate" width="250px" tabindex="5">
                         <attribute w:name="doKeyPress_">

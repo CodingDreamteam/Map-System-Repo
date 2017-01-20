@@ -6,8 +6,7 @@
             <listhead width="100%" height="100%">
             <listheader label="Ci" width="100px"></listheader>
             <listheader label="First Name" width="100px"></listheader>
-            <listheader label="Last Name" width="100px"></listheader>
-            <listheader label="Phone Number" width="100px"></listheader>
+            <listheader label="Last Name" width="100px"></listheader>            
             <listheader label="Gender" width="100px"></listheader>
             <listheader label="Birthdate" width="100px"></listheader>
             <listheader label="Comment" width="100px"> </listheader>           

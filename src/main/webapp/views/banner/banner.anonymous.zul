@@ -1,5 +1,4 @@
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
-<?init class="org.test.zk.security.CCheckAuthenticated"?>
 <zk>
     <div hflex="1" vflex="1" sclass="banner">
         <hbox hflex="1" vflex="1" align="center">
