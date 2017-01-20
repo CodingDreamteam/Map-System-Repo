@@ -18,6 +18,31 @@ public class CZKSubsystemEvents implements SessionInit, SessionCleanup, WebAppIn
         
         try {
             
+            CExtendedLogger webAppLogger = CExtendedLogger.getLogger( SystemConstants._Webapp_Logger_Name );
+            
+            if (webAppLogger != null) {
+                
+                webAppLogger.logMessage( "1",CLanguage.translateIf( null, "Webapp ending now." ) );
+                
+                webAppLogger.flushAndClose();
+                
+            }
+            
+            webApp.removeAttribute( SystemConstants._Webapp_Logger_Name );
+            
+         }
+         catch (Exception ex) {
+             
+             System.out.println( ex.getMessage()  );
+         }
+         
+     }
+    
+    @Override
+    public void init( WebApp webApp ) throws Exception {
+        
+        try {
+            
             String strRunningPath = webApp.getRealPath(SystemConstants._WEB_INF_Dir)  + "/";
             
             CExtendedConfigLogger configLogger = new CExtendedConfigLogger();
@@ -48,14 +73,7 @@ public class CZKSubsystemEvents implements SessionInit, SessionCleanup, WebAppIn
         }
         
     }
-
-    @Override
-    public void init( WebApp webApp ) throws Exception {
         
-
-        
-    }
-
     @Override
     public void cleanup( Session session ) throws Exception {
         
