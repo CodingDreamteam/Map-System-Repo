@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.map.zk.constants.CConstantes;
+import org.map.zk.systemconstans.SystemConstants;
 import org.map.zk.database.dao.*;
 import org.map.zk.database.CDatabaseConnection;
 import org.map.zk.database.CDatabaseConnectionConfig;
@@ -98,8 +98,8 @@ public class CManagerController extends SelectorComposer<Component> {
             listboxPersons.setItemRenderer(new MyRenderer());            
             Session sesion = Sessions.getCurrent();//Se crea variable sesion
             controllerLogger = (CExtendedLogger) Sessions.getCurrent().getWebApp().getAttribute(ConstantsCommonClasses._Webapp_Logger_App_Attribute_Key);
-            if(sesion.getAttribute(CConstantes.Database_Connection_Session_Key)instanceof CDatabaseConnection){
-                database=(CDatabaseConnection) sesion.getAttribute(CConstantes.Database_Connection_Session_Key);
+            if(sesion.getAttribute(SystemConstants._DB_Connection_Session_Key)instanceof CDatabaseConnection){
+                database=(CDatabaseConnection) sesion.getAttribute(SystemConstants._DB_Connection_Session_Key);
                 buttonConnection.setLabel("Desconectar");
             }
         } catch (Exception e) {
@@ -110,9 +110,9 @@ public class CManagerController extends SelectorComposer<Component> {
     public void onClickbuttoncargar (Event event){
         listboxPersons.setModel((ListModelList<?>) null);//Se limpia la listbox
         Session sesion = Sessions.getCurrent();//Se recupera la sesión
-        if(sesion.getAttribute(CConstantes.Database_Connection_Session_Key)instanceof CDatabaseConnection){//Si se está conectado
-            database=(CDatabaseConnection) sesion.getAttribute(CConstantes.Database_Connection_Session_Key);//Se asigna la dirección de la bd
-            List<TBLPerson>listData=PersonDAO.searchData(database,controllerLogger, controllerLanguage);//Se llama al método de búsqueda y se asigna a la lista de persona            
+        if(sesion.getAttribute(SystemConstants._DB_Connection_Session_Key)instanceof CDatabaseConnection){//Si se está conectado
+            database=(CDatabaseConnection) sesion.getAttribute(SystemConstants._DB_Connection_Session_Key);//Se asigna la dirección de la bd
+            List<TBLPerson>listData=PersonDAO.loadAllData(database,controllerLogger, controllerLanguage);//Se llama al método de búsqueda y se asigna a la lista de persona            
             datamodelpersona=new ListModelList<TBLPerson>(listData);//Se crea un nuevo modelo con la lista de personas
             listboxPersons.setModel(datamodelpersona);//se le asigna al listbox
             listboxPersons.setItemRenderer((new MyRenderer()));
@@ -124,14 +124,14 @@ public class CManagerController extends SelectorComposer<Component> {
         if(database==null){//Si se va a conectar            
             database = new CDatabaseConnection();//Se instancia     
             CDatabaseConnectionConfig databaseconnectionconfig = new CDatabaseConnectionConfig();//Se instancia una variable de clase databaseconnectionconfig
-            String strRunningPath = Sessions.getCurrent().getWebApp().getRealPath(CConstantes.WEB_INF_Dir)+File.separator+CConstantes.Config_Dir+File.separator; //Se asigna a una cadena la dirección la carpeta del archivo del archivo
+            String strRunningPath = Sessions.getCurrent().getWebApp().getRealPath(SystemConstants._WEB_INF_DIR)+File.separator+SystemConstants._CONFIG_DIR+File.separator; //Se asigna a una cadena la dirección la carpeta del archivo del archivo
             
             
             
-            if(databaseconnectionconfig.loadConfig(strRunningPath+File.separator+CConstantes.Database_Connection_Config_File_Name,controllerLogger,controllerLanguage)){//Se selecciona el archivo y se carga la configuración                                     
-                if(database.makeConnectionToDB( databaseconnectionconfig, controllerLogger, controllerLanguage)){//Si se logra conectar
-                    database.setDBConnectionConfig(databaseconnectionconfig, controllerLogger, controllerLanguage);
-                    sesion.setAttribute(CConstantes.Database_Connection_Session_Key, database);//Se crea la sesión
+            if(databaseconnectionconfig.LoadConfig(strRunningPath+File.separator+SystemConstants._DATABASE_CONFIG_FILE,controllerLogger,controllerLanguage)){//Se selecciona el archivo y se carga la configuración                                     
+                if(database.makeConnectionToDatabase( databaseconnectionconfig, controllerLogger, controllerLanguage)){//Si se logra conectar
+                    database.setDatabaseConnectionConfig(databaseconnectionconfig, controllerLogger, controllerLanguage);
+                    sesion.setAttribute(SystemConstants._DB_Connection_Session_Key, database);//Se crea la sesión
                     buttonConnection.setLabel("Desconectar");//Se cambia el contexto                
                     Messagebox.show("       ¡Conexión exitosa!.", "Aceptar", Messagebox.OK, Messagebox.EXCLAMATION);//Mensaje de exito
                     Events.echoEvent("onClick", buttonLoad, null);
@@ -143,7 +143,7 @@ public class CManagerController extends SelectorComposer<Component> {
                 }
         }else{//Si se va a desconectar
             if (database!=null){//Si la variable no es nula
-             sesion.setAttribute(CConstantes.Database_Connection_Session_Key, null);//Se limpia la sesión
+             sesion.setAttribute(SystemConstants._DB_Connection_Session_Key, null);//Se limpia la sesión
              buttonConnection.setLabel("Conectar");//Se cambia el contexto
              
              if(database.closeConnectionToDB(controllerLogger, controllerLanguage)){//Se cierra la conexión
