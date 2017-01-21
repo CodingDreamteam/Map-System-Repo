@@ -58,4 +58,10 @@ public class SystemConstants {
     public static final String _Home_Controller_File_Log = "home_controller.log";
 
     public static final String _Logged_Session_Loggers = "loggedSessionLoggers";
+    
+    public static final String _Person_Manager_Controller_Logger_Name = "person_manager_controller";
+    public static final String _Person_Manager_Controller_File_Log = "person_manager_controller.log";
+
+    public static final String _Person_Editor_Controller_Logger_Name = "person_editor_controller";
+    public static final String _Person_Editor_Controller_File_Log = "person_editor_controller.log";
 }
