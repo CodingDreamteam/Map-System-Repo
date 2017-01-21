@@ -34,7 +34,7 @@ public class ChomeController extends SelectorComposer<Component> {
     
     @Wire( "#includeNorthContent #labelHeader" )
     Label labelHeader;
-    
+       
     @Wire
     Tabbox tabboxMainContent;
     
@@ -123,13 +123,7 @@ public class ChomeController extends SelectorComposer<Component> {
         
     }
     
-    @Listen( "onClick= #includeNorthContent #BLogout" )
-    public void onClicLogout( Event event ) {
-        
-        System.out.println( "Logout" );
-        
-    }
-    
+
     @Listen( "onClick = #includeNorthContent #buttonChangePassword" )  
     public void onClickbuttonChangePassword( Event event ) {
 

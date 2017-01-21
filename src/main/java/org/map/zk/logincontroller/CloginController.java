@@ -32,9 +32,7 @@ import commonlibs.utils.ZKUtilities;
 public class CloginController extends SelectorComposer<Component> {
     
     private static final long serialVersionUID = 3211193732865097784L;
-    
-    public static final String Databasekey = "database";
-    
+        
     protected Execution execution = Executions.getCurrent();
     
     protected CDatabaseConnection ConnectionDatabase = null;
@@ -76,18 +74,7 @@ public class CloginController extends SelectorComposer<Component> {
     //onChangin es una accion que nos permite que cuando seleccionemos un textbox lo limpie si tiene algo dentro
     @Listen( "onChanging=#textboxOperator ;onChanging=#textboxPassword" )
     public void onChangeTextBox( Event event ) {
-        
-        if ( event.getTarget().equals( textboxOperator ) ) {//de esta forma podemos distinguir de cual de los dos eventos se selecciono
-            
-            System.out.println( "Text Box usuario" );//puede ser util deacuerdo a lo que se quiera hacer 
-            
-        }
-        else if ( event.getTarget().equals( textboxPassword ) ) {// en mi opinion esto ayuda mucho a algo que me gusta hacer que es 
-            
-            System.out.println( "Text Box password" );//utilizar el codigo de un metodo para varias cosas soloc ambiando pequiños detalles
-            
-        }
-        
+               
         labelMessage.setValue( "" );
         
     }
@@ -126,7 +113,7 @@ public class CloginController extends SelectorComposer<Component> {
                             
                             labelMessage.setValue( "Welcome " + operador.getName() + "!" );
                             
-                            session.setAttribute( Databasekey, ConnectionDatabase );
+                            session.setAttribute( SystemConstants._DB_Connection_Session_Key, ConnectionDatabase );
                             
                             session.setAttribute( SystemConstants._Operator_Credential_Session_Key, operador );
                             
