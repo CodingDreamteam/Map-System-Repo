@@ -305,7 +305,7 @@ public class CManagerController extends SelectorComposer<Component> {
         
     }
     
-    @Listen( "onClick=#buttonmodify" ) 
+    @Listen( "onClick=#buttonmodify" ) //
     public void onClickbuttonmodify( Event event ) {
         
         if ( listboxPersons.getSelectedIndex() >= 0 ) {
