@@ -9,5 +9,8 @@
 		<value>Map-System</value>
 	</preference>
 	-->
-	
+	 <listener>
+      <listener-class>org.map.zk.zksubsystem.CZKSubsystemEvents </listener-class>
+    </listener>
+  
 </zk>

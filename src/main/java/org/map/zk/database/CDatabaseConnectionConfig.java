@@ -98,7 +98,8 @@ public class CDatabaseConnectionConfig implements Serializable {
     
     public void setDriver( String driver ) {
         
-        Driver = driver;
+        this.Driver = driver;
+
         
     }
 
@@ -112,8 +113,8 @@ public class CDatabaseConnectionConfig implements Serializable {
     
     public void setPrefix( String prefix ) {
         
-        Prefix = prefix;
-        
+        this.Prefix = prefix;
+     
     }
 
     
@@ -126,7 +127,9 @@ public class CDatabaseConnectionConfig implements Serializable {
     
     public void setHost( String host ) {
         
-        Host = host;
+
+        this.Host = host;
+
         
     }
 
@@ -138,9 +141,9 @@ public class CDatabaseConnectionConfig implements Serializable {
     }
 
     
-    public void setPort( String port ) {
-        
-        Port = port;
+    public void setPort( String port ) {      
+
+        this.Port = port;
         
     }
 
@@ -154,7 +157,7 @@ public class CDatabaseConnectionConfig implements Serializable {
     
     public void setDatabase( String database ) {
         
-        Database = database;
+        this.Database = database;
         
     }
 
@@ -168,7 +171,7 @@ public class CDatabaseConnectionConfig implements Serializable {
     
     public void setUser( String user ) {
         
-        User = user;
+        this.User = user;
         
     }
 
@@ -182,7 +185,7 @@ public class CDatabaseConnectionConfig implements Serializable {
     
     public void setPassword( String password ) {
         
-        Password = password;
+        this.Password = password;
         
     }
 }

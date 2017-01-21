@@ -1,6 +1,5 @@
 package org.map.zk.controllers.manager;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,10 +10,8 @@ import org.map.zk.systemconstans.SystemConstants;
 import org.map.zk.utilities.SystemUtilities;
 import org.map.zk.database.dao.*;
 import org.map.zk.database.CDatabaseConnection;
-import org.map.zk.database.CDatabaseConnectionConfig;
 import org.map.zk.database.datamodel.TBLPerson;
 import org.map.zk.database.datamodel.TBLUser;
-import org.map.zk.controllers.manager.CManagerController.MyRenderer;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
