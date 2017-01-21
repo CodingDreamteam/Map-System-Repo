@@ -53,12 +53,15 @@ public class ChomeController extends SelectorComposer<Component> {
         String strLogPath = ( String ) currentSession.getAttribute( SystemConstants._Log_Path_Session_Key ); //Recuperamos el path donde se guardarn los log ya que cambia según el nombre de l operador que inicie sesion  
         
         if ( operatorCredential != null )
-            strOperator = operatorCredential.getName();  //Obtenemos el nombre del operador que hizo login
+           
+        	strOperator = operatorCredential.getName();  //Obtiene el nombre del operador que esta logeado
             
-        if ( strLoginDateTime == null ) //En caso de ser null no ha fecha y hora de inicio de sesión colocarle una por defecto
-            strLoginDateTime = Utilities.getDateInFormat( ConstantsCommonClasses._Global_Date_Time_Format_File_System_24, null );
+        if ( strLoginDateTime == null ) 
+        	
+        	strLoginDateTime = Utilities.getDateInFormat( ConstantsCommonClasses._Global_Date_Time_Format_File_System_24, null );
         
         final String LoggerName = SystemConstants._Home_Controller_Logger_Name;
+       
         final String LoggerFileName = SystemConstants._Home_Controller_File_Log;
         
         controllerLogger = CExtendedLogger.getLogger( LoggerName + " " + strOperator + " " + strLoginDateTime );
@@ -77,13 +80,11 @@ public class ChomeController extends SelectorComposer<Component> {
                 
                 controllerLogger.setupLogger( strOperator + " " + strLoginDateTime, false, strLogPath, LoggerFileName, SystemConstants.LOG_CLASS_METHOD, SystemConstants.LOG_EXACT_MATCH, SystemConstants.log_level, "", -1, "", "", "", "", -1, "", "" );
             
-            //Inicializamos el lenguage para ser usado por el logger
-            controllerLanguage = CLanguage.getLanguage( controllerLogger, RunningPath + SystemConstants._Langs_Dir + LoggerName + "." + SystemConstants._Lang_Ext );
-            
-            //Protección para el multi hebrado, puede que dos usuarios accedan exactamente al mismo tiempo a la página web, este código en el servidor se ejecuta en dos hebras
+                controllerLanguage = CLanguage.getLanguage( controllerLogger, RunningPath + SystemConstants._Langs_Dir + LoggerName + "." + SystemConstants._Lang_Ext );
+                           
             synchronized ( currentSession ) {
                 
-                //Guardamos en la sesisón los logger que se van creando para luego ser destruidos.
+                //Guardamos en la sesion los logger que se van creando
                 @SuppressWarnings( "unchecked" )
                 LinkedList<String> loggedSessionLoggers = ( LinkedList<String> ) currentSession.getAttribute( SystemConstants._Logged_Session_Loggers );
                 
@@ -110,7 +111,7 @@ public class ChomeController extends SelectorComposer<Component> {
     public void doAfterCompose( Component comp ) {
         
         try {
-            //
+          
             super.doAfterCompose( comp );
             
             final String strRunningPath = Sessions.getCurrent().getWebApp().getRealPath( SystemConstants._WEB_INF_DIR ) + File.separator;
@@ -136,6 +137,7 @@ public class ChomeController extends SelectorComposer<Component> {
         
     }    
     
+    //este metodo se encarga de pasarle la session al manager y redirigirte a el manager
     @Listen ("onClick= #buttonManager")
     public void onClickbuttonPersonManager (Event event) { 
      
@@ -152,7 +154,7 @@ public class ChomeController extends SelectorComposer<Component> {
         
     }
     
-    
+    //este metodo se encarga del logout, obteniendo la session y eliminandola
     @SuppressWarnings( { "unchecked", "rawtypes" } )
     @Listen( "onClick = #includeNorthContent #buttonLogout" )  
     public void onClickbuttonLogout( Event event ) {
@@ -169,10 +171,10 @@ public class ChomeController extends SelectorComposer<Component> {
                     if ( controllerLogger != null )
                         controllerLogger.logMessage( "1" , CLanguage.translateIf( controllerLanguage, "Logout confirm accepted" ) );
                     
-                    //Ok aquí vamos hacer el logout
-                    Sessions.getCurrent().invalidate(); //Listo obliga limpiar la sessión mejor que ir removeAttribute a removeAttribute
+                    //borramos la session
+                    Sessions.getCurrent().invalidate(); 
                    
-                    Executions.sendRedirect( "/index.zul"); //Lo enviamos al login
+                    Executions.sendRedirect( "/index.zul"); //redirigimos al login
                     
                 }
                 else {
