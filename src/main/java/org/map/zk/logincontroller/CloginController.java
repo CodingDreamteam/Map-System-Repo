@@ -110,7 +110,7 @@ public class CloginController extends SelectorComposer<Component> {
                 
                 CDatabaseConnectionConfig config = new CDatabaseConnectionConfig();
                 
-                String patch = Sessions.getCurrent().getWebApp().getRealPath( SystemConstants._WEB_INF_DIR ) + File.separator + SystemConstants._CONFIG_DIR + File.separator;
+                String patch = Sessions.getCurrent().getWebApp().getRealPath( SystemConstants._WEB_INF_DIR ) + File.separator + SystemConstants._CONFIG_DIR;
                 
                 if ( config.LoadConfig( patch + SystemConstants._DATABASE_CONFIG_FILE, controllogger, controllanguaje ) ) {
                     

@@ -69,15 +69,15 @@ public class CDatabaseConnection implements Serializable {
 
                    localLogger.logMessage( "1" , CLanguage.translateIf( localLanguage, "Loaded driver [%s]", localDBConnectionConfig.Driver ) );
                    
-                   String DatabaseURL = localDBConnectionConfig.Prefix + localDBConnectionConfig.Host + ":" + localDBConnectionConfig.Port + "/" + localDBConnectionConfig.Database;
+                   String strDatabaseURL = localDBConnectionConfig.Prefix + localDBConnectionConfig.Host + ":" + localDBConnectionConfig.Port + "/" + localDBConnectionConfig.Database;
 
-                   localLogger.logMessage( "1", CLanguage.translateIf( localLanguage, "Try to connecting to [%s] user [%s] password [%s]", DatabaseURL, localDBConnectionConfig.User, localDBConnectionConfig.Password ) );
+                   localLogger.logMessage( "1", CLanguage.translateIf( localLanguage, "Try to connecting to [%s] user [%s] password [%s]", strDatabaseURL, localDBConnectionConfig.User, localDBConnectionConfig.Password ) );
 
-                   Connection localDBConnection = DriverManager.getConnection( DatabaseURL, localDBConnectionConfig.User, localDBConnectionConfig.Password );
+                   Connection localDBConnection = DriverManager.getConnection( strDatabaseURL, localDBConnectionConfig.User, localDBConnectionConfig.Password );
                                    
                    localDBConnection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
                    
-                   localLogger.logMessage( "1", CLanguage.translateIf( localLanguage, "Connected to [%s] user [%s] password [%s]", DatabaseURL, localDBConnectionConfig.User, localDBConnectionConfig.Password ) );
+                   localLogger.logMessage( "1", CLanguage.translateIf( localLanguage, "Connected to [%s] user [%s] password [%s]", strDatabaseURL, localDBConnectionConfig.User, localDBConnectionConfig.Password ) );
 
                    bResult = localDBConnection != null && localDBConnection.isValid( 5 );
                    

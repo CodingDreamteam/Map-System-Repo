@@ -40,9 +40,12 @@ public class CDatabaseConnectionConfig implements Serializable {
         boolean bResult = false; 
         
         try {
+        	
             File configFilePath = new File (ConfigPath);
+            
             if (configFilePath.exists()) {
-                Properties configData = new Properties();
+            
+            	Properties configData = new Properties();
                 
                 FileInputStream inputStream = new FileInputStream( configFilePath );
                 configData.loadFromXML( inputStream );
@@ -67,15 +70,19 @@ public class CDatabaseConnectionConfig implements Serializable {
                 bResult = true; 
             
             }else if(localLogger !=null){
-                localLogger.logError( "-1001", CLanguage.translateIf( localLanguage, "Config File int path [%s] not found",ConfigPath ) );
+              
+            	localLogger.logError( "-1001", CLanguage.translateIf( localLanguage, "Config File int path [%s] not found",ConfigPath ) );
                 
             }
           
         }
         catch (Exception ex) {
-            if(localLogger!=null){
-                localLogger.logException( "-1021", ex.getMessage(), ex);
-            }
+           
+        	if(localLogger!=null){
+            
+        		localLogger.logException( "-1021", ex.getMessage(), ex);
+            
+        	}
         }
         
         return bResult;
@@ -85,83 +92,97 @@ public class CDatabaseConnectionConfig implements Serializable {
     public String getDriver() {
         
         return Driver;
+        
     }
 
     
     public void setDriver( String driver ) {
         
         Driver = driver;
+        
     }
 
     
     public String getPrefix() {
         
         return Prefix;
+        
     }
 
     
     public void setPrefix( String prefix ) {
         
         Prefix = prefix;
+        
     }
 
     
     public String getHost() {
         
         return Host;
+        
     }
 
     
     public void setHost( String host ) {
         
         Host = host;
+        
     }
 
     
     public String getPort() {
         
         return Port;
+        
     }
 
     
     public void setPort( String port ) {
         
         Port = port;
+        
     }
 
     
     public String getDatabase() {
         
         return Database;
+        
     }
 
     
     public void setDatabase( String database ) {
         
         Database = database;
+        
     }
 
     
     public String getUser() {
         
         return User;
+        
     }
 
     
     public void setUser( String user ) {
         
         User = user;
+        
     }
 
     
     public String getPassword() {
         
         return Password;
+        
     }
 
     
     public void setPassword( String password ) {
         
         Password = password;
+        
     }
 }
