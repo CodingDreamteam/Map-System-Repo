@@ -18,10 +18,9 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.Button;
 import org.zkoss.zul.Datebox;
-import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Selectbox;
 import org.zkoss.zul.Textbox;
@@ -39,48 +38,25 @@ public class CEditorController extends SelectorComposer<Component> {
     
     @Wire
     Window windowPerson;
-    
-    @Wire
-    Label labelCi;
-    
+       
     @Wire
     Textbox textboxCi;
+      
+    @Wire
+    Textbox textboxFirstName;
     
     @Wire
-    Label labelNombre;
+    Textbox textboxLastName;
     
     @Wire
-    Textbox textboxNombre;
+    Datebox dateboxBirthdate;
     
     @Wire
-    Label labelApellido;
-    
+    Selectbox selectboxGender;
+
     @Wire
-    Textbox textboxApellido;
+    Textbox textboxComment;
     
-    @Wire
-    Label labelFecha;
-    
-    @Wire
-    Datebox dateboxFecha;
-    
-    @Wire
-    Label labelGenero;
-    
-    @Wire
-    Selectbox selectboxGenero;
-    
-    @Wire
-    Label labelComentario;
-    
-    @Wire
-    Textbox textboxComentario;
-    
-    @Wire
-    Button buttonGuardar;
-    
-    @Wire
-    Button buttonCancelar;
     
     protected CExtendedLogger controllerLogger = null;
     
@@ -88,7 +64,7 @@ public class CEditorController extends SelectorComposer<Component> {
     
     protected ListModelList<String> datamodel = new ListModelList<String>();
        
-    protected Button buttonModify;
+    protected Listbox listboxPersons = null;
     
     protected final Execution execution = Executions.getCurrent();
     
@@ -162,14 +138,14 @@ public class CEditorController extends SelectorComposer<Component> {
             final String strRunningpath = Sessions.getCurrent().getWebApp().getRealPath( SystemConstants._WEB_INF_DIR );
             initcontrollerLoggerAndcontrollerLanguage( strRunningpath, Sessions.getCurrent() );
             controllerLogger = ( CExtendedLogger ) Sessions.getCurrent().getWebApp().getAttribute( ConstantsCommonClasses._Webapp_Logger_App_Attribute_Key );
-            dateboxFecha.setFormat("dd-MM-yyyy");
+            dateboxBirthdate.setFormat("dd-MM-yyyy");
             datamodel.add("Female");
             datamodel.add("Male");
-            selectboxGenero.setModel(datamodel);
-            selectboxGenero.setSelectedIndex(0);
-            datamodel.addToSelection( "female" );
+            selectboxGender.setModel(datamodel);
+            selectboxGender.setSelectedIndex(0);
+            datamodel.addToSelection( "Female" );
             
-            buttonModify = (Button) execution.getArg().get( "buttonModify" );
+            listboxPersons = (Listbox) execution.getArg().get( "listboxPersons" );
             
             PersonaCi = (String) execution.getArg().get( "PersonaCi" );
             
@@ -189,22 +165,22 @@ public class CEditorController extends SelectorComposer<Component> {
             if (PersonaCi != null){
                 
               textboxCi.setValue( personToModify.getID() );
-              textboxNombre.setValue( personToModify.getFirstName() );
-              textboxApellido.setValue( personToModify.getLastName() );
-              textboxComentario.setValue( personToModify.getComment() );
+              textboxFirstName.setValue( personToModify.getFirstName() );
+              textboxLastName.setValue( personToModify.getLastName() );
+              textboxComment.setValue( personToModify.getComment() );
               if (personToModify.getGender()== 0){
                                 
-                 datamodel.addToSelection( "female" );
+                 datamodel.addToSelection( "Female" );
               
             
               }
               else{
                 
-                 datamodel.addToSelection( "male" );  
+                 datamodel.addToSelection( "Male" );  
                 
               }
            
-                 dateboxFecha.setValue( java.sql.Date.valueOf(personToModify.getBirthdate()) );
+                 dateboxBirthdate.setValue( java.sql.Date.valueOf(personToModify.getBirthdate()) );
               
               }
             
@@ -222,16 +198,16 @@ public class CEditorController extends SelectorComposer<Component> {
         }
     }
 
-    @Listen("onClick=#buttonguardar")
+    @Listen("onClick=#buttonSave")
     public void onClickButtonGuardar(Event event) {
-        if(dateboxFecha.getValue()!=null) {
-          LocalDate localDate = new java.sql.Date(dateboxFecha.getValue().getTime()).toLocalDate();
+        if(dateboxBirthdate.getValue()!=null) {
+          LocalDate localDate = new java.sql.Date(dateboxBirthdate.getValue().getTime()).toLocalDate();
           personToModify.setID(textboxCi.getValue());
-          personToModify.setFirstName(textboxNombre.getValue());
-          personToModify.setLastName(textboxApellido.getValue());        
-          personToModify.setGender(selectboxGenero.getSelectedIndex());
+          personToModify.setFirstName(textboxFirstName.getValue());
+          personToModify.setLastName(textboxLastName.getValue());        
+          personToModify.setGender(selectboxGender.getSelectedIndex());
           personToModify.setBirthdate(localDate);
-          personToModify.setComment(textboxComentario.getValue());
+          personToModify.setComment(textboxComment.getValue());
           
           if ( ( !personToModify.getID().equals("")) && ( !personToModify.getFirstName().equals("") ) && ( !personToModify.getLastName().equals("") ) && ( personToModify.getGender()>=0 ) && ( personToModify.getBirthdate() != null ) && ( !personToModify.getComment().equals("") ) ){            
   
@@ -239,8 +215,8 @@ public class CEditorController extends SelectorComposer<Component> {
                 
                 PersonDAO.insertData( dbConnection, personToModify, controllerLogger, controllerLanguage );
                 
-                Events.echoEvent ( new Event ( "onKek", buttonModify, personToModify ) );
-                
+                Events.echoEvent ( new Event ( "onKek", listboxPersons, personToModify ) );
+                                
                 windowPerson.detach();
                 
             }
@@ -248,7 +224,7 @@ public class CEditorController extends SelectorComposer<Component> {
                                
                 PersonDAO.updateData( dbConnection, personToModify, controllerLogger, controllerLanguage );
                 
-                Events.echoEvent ( new Event ( "onKek", buttonModify, personToModify ) );
+                Events.echoEvent ( new Event ( "onKek", listboxPersons, personToModify ) );
                 
                 windowPerson.detach();
                 
@@ -270,7 +246,7 @@ public class CEditorController extends SelectorComposer<Component> {
         }
     }
 
-    @Listen("onClick=#buttoncancelar")
+    @Listen("onClick=#buttonCancel")
     public void onClickButtonCancelar( Event event ) {
         
         Messagebox.show( "       No change was made", "Aceptar", Messagebox.OK, Messagebox.EXCLAMATION );
