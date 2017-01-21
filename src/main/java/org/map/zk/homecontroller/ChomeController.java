@@ -160,7 +160,7 @@ public class ChomeController extends SelectorComposer<Component> {
         if ( controllerLogger != null )
             controllerLogger.logMessage( "1" , CLanguage.translateIf( controllerLanguage, "Button change password clicked" ) );
         
-        Messagebox.show( "You are sure do you want logout from system?", "Logout", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new org.zkoss.zk.ui.event.EventListener() {
+        Messagebox.show( "Are you sure do you want logout from system?", "Logout", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new org.zkoss.zk.ui.event.EventListener() {
             
             public void onEvent(Event evt) throws InterruptedException {
                 

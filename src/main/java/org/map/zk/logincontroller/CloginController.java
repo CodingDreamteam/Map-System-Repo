@@ -150,20 +150,20 @@ public class CloginController extends SelectorComposer<Component> {
                         }
                         else {
                             
-                            labelMessage.setValue( "error en el usuaro o password" );
+                            labelMessage.setValue( "error wrong user or password" );
                             
                         }
                     }
                     else {
                         
-                        Messagebox.show( "Conexion fallida!." );
+                        Messagebox.show( "Connection Failed." );
                         
                     }
                     
                 }
                 else {
                     
-                    Messagebox.show( "Error al leer el archivo de configuracion" );
+                    Messagebox.show( "Error, cannot read the configuration file" );
                     
                 }
                 
