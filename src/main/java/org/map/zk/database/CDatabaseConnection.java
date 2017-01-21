@@ -9,11 +9,9 @@ import commonlibs.extendedlogger.CExtendedLogger;
 
 public class CDatabaseConnection implements Serializable {
 
-    private static final long serialVersionUID = 2311816988364334105L;
+       private static final long serialVersionUID = 2311816988364334105L;
     
-    
-    
-    protected Connection DatabaseConnection; 
+       protected Connection DatabaseConnection; 
        
        
        protected CDatabaseConnectionConfig DatabaseConnectionConfig;

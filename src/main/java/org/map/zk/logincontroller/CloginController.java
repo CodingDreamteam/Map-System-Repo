@@ -35,29 +35,38 @@ public class  CloginController  extends SelectorComposer<Component>  {
 	private static final long serialVersionUID = 3211193732865097784L;
 
 	public static final String Databasekey = "database";  
-    protected Execution execution = Executions.getCurrent();
-    protected CDatabaseConnection ConnectionDatabase = null;
-    protected CExtendedLogger controllogger=null;
-    protected CLanguage controllanguaje=null;
+    
+	protected Execution execution = Executions.getCurrent();
+    
+	protected CDatabaseConnection ConnectionDatabase = null;
+    
+	protected CExtendedLogger controllogger=null;
+    
+	protected CLanguage controllanguaje=null;
    
     @Wire
-    Textbox Tuser;
+    Textbox textboxOperator;
 
     @Wire
-    Textbox Tpassword;
+    Textbox textboxPassword;
     
     @Wire
-    Label LMessage;
+    Label labelMessage;
     
     
     @Override
 	public void doAfterCompose(Component comp) {
-        try {
-            super.doAfterCompose(comp);
-            controllogger = (CExtendedLogger) Sessions.getCurrent().getWebApp().getAttribute(SystemConstants._Webapp_Logger_App_Attribute_Key);
+       
+    	try {
+       
+        	super.doAfterCompose(comp);
+            
+        	controllogger = (CExtendedLogger) Sessions.getCurrent().getWebApp().getAttribute(SystemConstants._Webapp_Logger_App_Attribute_Key);
 
         }catch (Exception e) {
-            if(controllogger!=null){
+        	
+            if( controllogger!=null ){
+            
             	controllogger.logException("-1021", e.getMessage(),e);
             	
             }
@@ -68,46 +77,57 @@ public class  CloginController  extends SelectorComposer<Component>  {
 
     
     //onChangin es una accion que nos permite que cuando seleccionemos un textbox lo limpie si tiene algo dentro
-	@Listen("onChanging=#Tuser ;onChanging=#Tpassword")
+	@Listen("onChanging=#textboxOperator ;onChanging=#textboxPassword")
     public void onChangeTextBox (Event event){
+			
+		if(event.getTarget().equals(textboxOperator)){//de esta forma podemos distinguir de cual de los dos eventos se selecciono
 		
-		
-		if(event.getTarget().equals(Tuser)){//de esta forma podemos distinguir de cual de los dos eventos se selecciono
 			System.out.println("Text Box usuario");//puede ser util deacuerdo a lo que se quiera hacer 
-		}else if(event.getTarget().equals(Tpassword)){// en mi opinion esto ayuda mucho a algo que me gusta hacer que es 
+		
+		}else if(event.getTarget().equals(textboxPassword)){// en mi opinion esto ayuda mucho a algo que me gusta hacer que es 
+		
 			System.out.println("Text Box password");//utilizar el codigo de un metodo para varias cosas soloc ambiando pequiños detalles
+		
 		}											
 		
-		LMessage.setValue("");
+		labelMessage.setValue("");
 	
 	}
-//
 
-	@Listen("onClick=#BLogin")
+
+	@Listen("onClick=#buttonLogin")
     public void onClickBlogin (Event event){
 		try{
 			//aqui nos conectamos a laDB y verificamos que el user exista y la password sea correcta
-			final String username= ZKUtilities.getTextBoxValue(Tuser, controllogger);
-			final String userpassword= ZKUtilities.getTextBoxValue(Tpassword, controllogger);
+			
+			final String username= ZKUtilities.getTextBoxValue(textboxOperator, controllogger);
+			
+			final String userpassword= ZKUtilities.getTextBoxValue(textboxPassword, controllogger);
+			
 			Session session = Sessions.getCurrent();
+			
 			if( username.isEmpty()== false && userpassword.isEmpty() ==false ){
+			
 				ConnectionDatabase = new CDatabaseConnection(); 
+				
 				CDatabaseConnectionConfig config = new CDatabaseConnectionConfig();
 				
 				String patch = Sessions.getCurrent().getWebApp().getRealPath(SystemConstants._WEB_INF_DIR) + File.separator+ SystemConstants._CONFIG_DIR +File.separator;
-				if( config.LoadConfig(patch+SystemConstants._DATABASE_CONFIG_FILE,controllogger, controllanguaje)){
+				
+				if( config.LoadConfig(patch+SystemConstants._DATABASE_CONFIG_FILE,controllogger, controllanguaje ) ){
 	 
 			        if(ConnectionDatabase.makeConnectionToDatabase(config,controllogger,controllanguaje)){//Si logra conectarse  
-					 	TBLUser operador = UserDAO.checkData(ConnectionDatabase, username, userpassword, controllogger, controllanguaje);
+					 	
+			        	TBLUser operador = UserDAO.checkData( ConnectionDatabase, username, userpassword, controllogger, controllanguaje );
 					 		
 					 	if(operador!=null){
 					 			
 					 	Session currentSession = Sessions.getCurrent();
 					 			
 					 			
-					 	LMessage.setSclass("");
+					 	labelMessage.setSclass("");
 					 			
-					 	LMessage.setValue("Welcome "+operador.getName()+"!");
+					 	labelMessage.setValue("Welcome "+operador.getName()+"!");
 					 			
 					 	session.setAttribute(Databasekey, ConnectionDatabase);
 
@@ -144,7 +164,8 @@ public class  CloginController  extends SelectorComposer<Component>  {
 		                Executions.sendRedirect( "/views/home/home.zul" ); 
 					 		
 					 }else{
-					    LMessage.setValue("error en el usuaro o password");
+					  
+						 labelMessage.setValue("error en el usuaro o password");
 					 			
 					 }
 			      }else{
@@ -161,7 +182,8 @@ public class  CloginController  extends SelectorComposer<Component>  {
 	       
 			}
 		}catch (Exception e) {
-            if(controllogger!=null){
+           
+			if(controllogger!=null){
             	
             	controllogger.logException("-1021", e.getMessage(),e);
             	
