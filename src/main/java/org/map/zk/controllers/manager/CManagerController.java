@@ -393,14 +393,18 @@ public class CManagerController extends SelectorComposer<Component> {
                             
                             while ( selecteditems.iterator().hasNext() ) {//mientras haya elementos seleccionados
                                 
-                                TBLPerson persona = selecteditems.iterator().next();//se toma el elemento
+                                TBLPerson person = selecteditems.iterator().next();//se toma el elemento
+                                
                                 //selecteditems.iterator().remove();
                                 
-                                PersonDAO.deleteData( database, persona.getID(), controllerLogger, controllerLanguage );
+                                PersonDAO.deleteData(database, person.getID(), controllerLogger, controllerLanguage); 
+                                                                
+                                datamodelpersona.remove( person );//Se destruye
                                 
-                                Events.echoEvent( "onClick", buttonLoad, null );
-                                //datamodelpersona.remove( persona );//Se destruye
                             }//fin mientras
+                            
+                            Events.echoEvent( "onClick", buttonLoad, null );
+                            
                         }//fin si
                     }
                 } );
