@@ -83,7 +83,7 @@ public class CloginController extends SelectorComposer<Component> {
     
     //En este metodo nos conectamos a laDB, verificamos que tanto el user como la password sean correctas
     //para permitirle logearse en el sistema, guardamos la session colocamos datos dentro de ella
-    //finalmente redirigimos al home
+    //finalmente redirigimos al Home
     @Listen( "onClick=#buttonLogin" )
     public void onClickBlogin( Event event ) {
         

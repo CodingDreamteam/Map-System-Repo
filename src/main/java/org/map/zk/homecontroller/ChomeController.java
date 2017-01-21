@@ -84,7 +84,7 @@ public class ChomeController extends SelectorComposer<Component> {
                            
             synchronized ( currentSession ) {
                 
-                //Guardamos en la sesion los logger que se van creando
+                //Guardamos en la sesion los logger que se crean
                 @SuppressWarnings( "unchecked" )
                 LinkedList<String> loggedSessionLoggers = ( LinkedList<String> ) currentSession.getAttribute( SystemConstants._Logged_Session_Loggers );
                 

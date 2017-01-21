@@ -185,7 +185,7 @@ public class UserDAO  {
             
             if ( dbConnection != null && dbConnection.getDatabaseConnection() != null ) {
                 
-            	//estos String son para hacer mas facil y entendible la consulta sql
+            	//estos string son para hacer mas facil y entendible la consulta sql
             	
                 final String strDisabledAtDate = "', DisabledAtDate = " + tblUser.getDisabledAtDate() != null ? "'" + LocalDate.now().toString() + "'" : "null";
                 

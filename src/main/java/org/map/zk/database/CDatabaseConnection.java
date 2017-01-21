@@ -55,7 +55,7 @@ public class CDatabaseConnection implements Serializable {
        
        
        //este metodo se encarga de crear la coneccion con la base de datos 
-       //obteniendo su configuracion y direccion con ayuda de la clase CdatabaseConnentionConfg
+       //obteniendo su configuracion y direccion con ayuda de la clase CdatabaseConnentionConfig
        public boolean makeConnectionToDatabase( CDatabaseConnectionConfig localDBConnectionConfig, CExtendedLogger localLogger, CLanguage localLanguage ) {
            
            boolean bResult = false;
