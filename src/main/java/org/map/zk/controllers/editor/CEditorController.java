@@ -153,7 +153,7 @@ public class CEditorController extends SelectorComposer<Component> {
             
         }
         
-    }
+    }//
     
     public void doAfterCompose( Component comp ) {
         
