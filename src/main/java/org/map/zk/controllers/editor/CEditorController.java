@@ -87,18 +87,17 @@ public class CEditorController extends SelectorComposer<Component> {
     protected CLanguage controllerLanguage = null;
     
     protected ListModelList<String> datamodel = new ListModelList<String>();
-    
-    protected Button buttonAdd;
-    
+       
     protected Button buttonModify;
     
-    protected Execution execution = Executions.getCurrent();
+    protected final Execution execution = Executions.getCurrent();
     
-    TBLPerson personToModify = ( TBLPerson ) execution.getArg().get( "personToModify" );
+    TBLPerson personToModify = null;
     
-    protected CDatabaseConnection database = null;
+    protected CDatabaseConnection dbConnection = null;
     
-    public static final String dbkey = "database";
+    protected String PersonaCi = null;
+    
     
     public void initcontrollerLoggerAndcontrollerLanguage( String strRunningPath, Session currentSession ) {
         
@@ -163,71 +162,121 @@ public class CEditorController extends SelectorComposer<Component> {
             final String strRunningpath = Sessions.getCurrent().getWebApp().getRealPath( SystemConstants._WEB_INF_DIR );
             initcontrollerLoggerAndcontrollerLanguage( strRunningpath, Sessions.getCurrent() );
             controllerLogger = ( CExtendedLogger ) Sessions.getCurrent().getWebApp().getAttribute( ConstantsCommonClasses._Webapp_Logger_App_Attribute_Key );
-            dateboxFecha.setFormat( "dd-MM-yyyy" );
-            datamodel.add( "Female" );
-            datamodel.add( "Male" );
-            selectboxGenero.setModel( datamodel );
-            selectboxGenero.setSelectedIndex( 0 );
-            datamodel.addSelection( "Female" );
-            Session sesion = Sessions.getCurrent();
-            if ( sesion.getAttribute( dbkey ) instanceof CDatabaseConnection ) {
-                database = ( CDatabaseConnection ) sesion.getAttribute( dbkey );
-                if ( execution.getArg().get( "PersonaCi" ) instanceof String ) {
-                    personToModify = PersonDAO.loadData( database, ( String ) execution.getArg().get( "PersonaCi" ), controllerLogger, controllerLanguage );
-                }
+            dateboxFecha.setFormat("dd-MM-yyyy");
+            datamodel.add("Female");
+            datamodel.add("Male");
+            selectboxGenero.setModel(datamodel);
+            selectboxGenero.setSelectedIndex(0);
+            datamodel.addToSelection( "female" );
+            
+            buttonModify = (Button) execution.getArg().get( "buttonModify" );
+            
+            PersonaCi = (String) execution.getArg().get( "PersonaCi" );
+            
+            Session currentSession = Sessions.getCurrent();
+            
+            if (currentSession.getAttribute( SystemConstants._DB_Connection_Session_Key) instanceof CDatabaseConnection){
+               
+             dbConnection = (CDatabaseConnection) currentSession.getAttribute( SystemConstants._DB_Connection_Session_Key );
+             
+               if (execution.getArg().get( "PersonaCi" ) instanceof String ){
+                 
+                   personToModify = PersonDAO.loadData( dbConnection, PersonaCi, controllerLogger, controllerLanguage ); 
+                 
+               }
             }
-            buttonModify = ( Button ) execution.getArg().get( "buttonmodify" );// TypeCast
-            buttonAdd = ( Button ) execution.getArg().get( "buttonadd" );// TypeCast
-            textboxCi.setValue( personToModify.getID() );
-            textboxNombre.setValue( personToModify.getFirstName() );
-            textboxApellido.setValue( personToModify.getLastName() );
-            if ( personToModify.getGender() == 0 ) {
-                datamodel.addToSelection( "Femenino" );
-            }
-            else {
-                datamodel.addToSelection( "Masculino" );
-            }
-            if ( personToModify.getBirthdate() != null ) {
-                dateboxFecha.setValue( java.sql.Date.valueOf( personToModify.getBirthdate() ) );
-            }
-            textboxComentario.setValue( personToModify.getComment() );
-        }
+
+            if (PersonaCi != null){
+                
+              textboxCi.setValue( personToModify.getID() );
+              textboxNombre.setValue( personToModify.getFirstName() );
+              textboxApellido.setValue( personToModify.getLastName() );
+              textboxComentario.setValue( personToModify.getComment() );
+              if (personToModify.getGender()== 0){
+                                
+                 datamodel.addToSelection( "female" );
+              
+            
+              }
+              else{
+                
+                 datamodel.addToSelection( "male" );  
+                
+              }
+           
+                 dateboxFecha.setValue( java.sql.Date.valueOf(personToModify.getBirthdate()) );
+              
+              }
+            
+            
+
+        } 
+        
         catch ( Exception e ) {
+            
             if ( controllerLogger != null ) {
-                controllerLogger.logException( "-1021", e.getMessage(), e );
+                
+                controllerLogger.logException ( "-1021", e.getMessage(), e );
+
+            }
+        }
+    }
+
+    @Listen("onClick=#buttonguardar")
+    public void onClickButtonGuardar(Event event) {
+        if(dateboxFecha.getValue()!=null) {
+          LocalDate localDate = new java.sql.Date(dateboxFecha.getValue().getTime()).toLocalDate();
+          personToModify.setID(textboxCi.getValue());
+          personToModify.setFirstName(textboxNombre.getValue());
+          personToModify.setLastName(textboxApellido.getValue());        
+          personToModify.setGender(selectboxGenero.getSelectedIndex());
+          personToModify.setBirthdate(localDate);
+          personToModify.setComment(textboxComentario.getValue());
+          
+          if ( ( !personToModify.getID().equals("")) && ( !personToModify.getFirstName().equals("") ) && ( !personToModify.getLastName().equals("") ) && ( personToModify.getGender()>=0 ) && ( personToModify.getBirthdate() != null ) && ( !personToModify.getComment().equals("") ) ){            
+  
+            if ( PersonaCi == null ) {
+                
+                PersonDAO.insertData( dbConnection, personToModify, controllerLogger, controllerLanguage );
+                
+                Events.echoEvent ( new Event ( "onKek", buttonModify, personToModify ) );
+                
+                windowPerson.detach();
                 
             }
-        }//
-    }
-    
-    @Listen( "onClick=#buttonguardar" )
-    public void onClickButtonGuardar( Event event ) {
-        
-        if ( dateboxFecha.getValue() != null ) {
-            LocalDate id = new java.sql.Date( dateboxFecha.getValue().getTime() ).toLocalDate();
-            personToModify.setID( textboxCi.getValue() );
-            personToModify.setFirstName( textboxNombre.getValue() );
-            personToModify.setLastName( textboxApellido.getValue() );
-            personToModify.setGender( selectboxGenero.getSelectedIndex() );
-            personToModify.setBirthdate( id );
-            personToModify.setComment( textboxComentario.getValue() );
-            if ( ( !personToModify.getID().equals( "" ) ) && ( !personToModify.getFirstName().equals( "" ) ) && ( !personToModify.getLastName().equals( "" ) ) && personToModify.getGender() >= 0 && personToModify.getBirthdate() != null && !personToModify.getComment().equals( "" ) ) {
-                Events.echoEvent( new Event( "onKek", buttonModify, personToModify ) );
-                windowPerson.detach();
-            }
             else {
-                Messagebox.show( "       Error, all fields must be filled", "Aceptar", Messagebox.OK, Messagebox.EXCLAMATION );
+                               
+                PersonDAO.updateData( dbConnection, personToModify, controllerLogger, controllerLanguage );
+                
+                Events.echoEvent ( new Event ( "onKek", buttonModify, personToModify ) );
+                
+                windowPerson.detach();
+                
             }
+              
+          }
+          else{
+              
+            Messagebox.show( "       Error, all fields must be filled", "Aceptar", Messagebox.OK, Messagebox.EXCLAMATION );
+            
+          }
+          
         }
+        
         else {
-            Messagebox.show( "       Error, the field date is empty", "Aceptar", Messagebox.OK, Messagebox.EXCLAMATION );
+            
+            Messagebox.show ( "       Error, the field date is empty", "Aceptar", Messagebox.OK, Messagebox.EXCLAMATION );
+            
         }
     }
-    
-    @Listen( "onClick=#buttoncancelar" )
+
+    @Listen("onClick=#buttoncancelar")
     public void onClickButtonCancelar( Event event ) {
         
         Messagebox.show( "       No change was made", "Aceptar", Messagebox.OK, Messagebox.EXCLAMATION );
+        
         windowPerson.detach();
+        
     }
+    
 }
