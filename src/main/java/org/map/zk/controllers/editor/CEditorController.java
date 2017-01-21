@@ -2,7 +2,6 @@ package org.map.zk.controllers.editor;
 
 import java.time.LocalDate;
 import java.util.LinkedList;
-
 import org.map.zk.database.dao.*;
 import org.map.zk.database.CDatabaseConnection;
 import org.map.zk.database.datamodel.*;
@@ -25,7 +24,6 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Selectbox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
-
 import commonlibs.commonclasses.CLanguage;
 import commonlibs.commonclasses.ConstantsCommonClasses;
 import commonlibs.extendedlogger.CExtendedConfigLogger;
@@ -82,16 +80,19 @@ public class CEditorController extends SelectorComposer<Component> {
         TBLUser operatorCredential = ( TBLUser ) currentSession.getAttribute( SystemConstants._Operator_Credential_Session_Key );
         
         String strOperator = SystemConstants._Operator_Unknown;
+        
         String strLoginDateTime = ( String ) currentSession.getAttribute( SystemConstants._Login_Date_Time_Session_Key );
+        
         String strLogPath = ( String ) currentSession.getAttribute( SystemConstants._Log_Path_Session_Key );
         
-        if ( operatorCredential != null )
+        if ( operatorCredential != null )            
             strOperator = operatorCredential.getName();
         
         if ( strLoginDateTime == null )
             strLoginDateTime = Utilities.getDateInFormat( ConstantsCommonClasses._Global_Date_Time_Format_File_System_24, null );
         
         final String strLoggerName = SystemConstants._Person_Editor_Controller_Logger_Name;
+        
         final String strLoggerFileName = SystemConstants._Person_Editor_Controller_File_Log;
         
         controllerLogger = CExtendedLogger.getLogger( strLoggerName + " " + strOperator + " " + strLoginDateTime );
@@ -135,27 +136,36 @@ public class CEditorController extends SelectorComposer<Component> {
         
         try {
             super.doAfterCompose( comp );
+            
             final String strRunningpath = Sessions.getCurrent().getWebApp().getRealPath( SystemConstants._WEB_INF_DIR );
+            
             initcontrollerLoggerAndcontrollerLanguage( strRunningpath, Sessions.getCurrent() );
+            
             controllerLogger = ( CExtendedLogger ) Sessions.getCurrent().getWebApp().getAttribute( ConstantsCommonClasses._Webapp_Logger_App_Attribute_Key );
+            
             dateboxBirthdate.setFormat("dd-MM-yyyy");
+            
             datamodel.add("Female");
+            
             datamodel.add("Male");
+            
             selectboxGender.setModel(datamodel);
+            
             selectboxGender.setSelectedIndex(0);
+            
             datamodel.addToSelection( "Female" );
             
-            listboxPersons = (Listbox) execution.getArg().get( "listboxPersons" );
+            listboxPersons = ( Listbox ) execution.getArg().get( "listboxPersons" );
             
-            PersonaCi = (String) execution.getArg().get( "PersonaCi" );
+            PersonaCi = ( String ) execution.getArg().get( "PersonaCi" );
             
             Session currentSession = Sessions.getCurrent();
             
-            if (currentSession.getAttribute( SystemConstants._DB_Connection_Session_Key) instanceof CDatabaseConnection){
+            if ( currentSession.getAttribute( SystemConstants._DB_Connection_Session_Key ) instanceof CDatabaseConnection ){
                
-             dbConnection = (CDatabaseConnection) currentSession.getAttribute( SystemConstants._DB_Connection_Session_Key );
+             dbConnection = ( CDatabaseConnection ) currentSession.getAttribute( SystemConstants._DB_Connection_Session_Key );
              
-              personToModify = new TBLPerson(); 
+             personToModify = new TBLPerson(); 
              
              if (execution.getArg().get( "PersonaCi" ) instanceof String ){
                  
@@ -164,13 +174,17 @@ public class CEditorController extends SelectorComposer<Component> {
                }
             }
 
-            if (PersonaCi != null){
+            if ( PersonaCi != null ){
                 
               textboxCi.setValue( personToModify.getID() );
+              
               textboxFirstName.setValue( personToModify.getFirstName() );
+              
               textboxLastName.setValue( personToModify.getLastName() );
+              
               textboxComment.setValue( personToModify.getComment() );
-              if (personToModify.getGender()== 0){
+              
+              if ( personToModify.getGender()== 0 ){
                                 
                  datamodel.addToSelection( "Female" );
               
@@ -182,7 +196,7 @@ public class CEditorController extends SelectorComposer<Component> {
                 
               }
            
-                 dateboxBirthdate.setValue( java.sql.Date.valueOf(personToModify.getBirthdate()) );
+                 dateboxBirthdate.setValue( java.sql.Date.valueOf( personToModify.getBirthdate() ) );
               
               }
             
@@ -200,18 +214,26 @@ public class CEditorController extends SelectorComposer<Component> {
         }
     }
 
-    @Listen("onClick=#buttonSave")
-    public void onClickButtonGuardar(Event event) {
-        if(dateboxBirthdate.getValue()!=null) {
-          LocalDate localDate = new java.sql.Date(dateboxBirthdate.getValue().getTime()).toLocalDate();
-          personToModify.setID(textboxCi.getValue());
-          personToModify.setFirstName(textboxFirstName.getValue());
-          personToModify.setLastName(textboxLastName.getValue());        
-          personToModify.setGender(selectboxGender.getSelectedIndex());
-          personToModify.setBirthdate(localDate);
-          personToModify.setComment(textboxComment.getValue());
+    @Listen( "onClick=#buttonSave" )
+    public void onClickButtonGuardar( Event event ) {
+        
+        if( dateboxBirthdate.getValue()!=null ) {
+            
+          LocalDate localDate = new java.sql.Date( dateboxBirthdate.getValue().getTime() ).toLocalDate();
           
-          if ( ( !personToModify.getID().equals("")) && ( !personToModify.getFirstName().equals("") ) && ( !personToModify.getLastName().equals("") ) && ( personToModify.getGender()>=0 ) && ( personToModify.getBirthdate() != null ) && ( !personToModify.getComment().equals("") ) ){            
+          personToModify.setID( textboxCi.getValue() );
+          
+          personToModify.setFirstName( textboxFirstName.getValue() );
+          
+          personToModify.setLastName( textboxLastName.getValue() );
+          
+          personToModify.setGender( selectboxGender.getSelectedIndex() );
+          
+          personToModify.setBirthdate( localDate );
+          
+          personToModify.setComment( textboxComment.getValue() );
+          
+          if ( ( !personToModify.getID().equals( "" ) ) && ( !personToModify.getFirstName().equals("") ) && ( !personToModify.getLastName().equals("") ) && ( personToModify.getGender()>=0 ) && ( personToModify.getBirthdate() != null ) && ( !personToModify.getComment().equals("") ) ){            
   
             if ( PersonaCi == null ) {
                 

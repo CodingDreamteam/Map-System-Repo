@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.map.zk.systemconstans.SystemConstants;
 import org.map.zk.utilities.SystemUtilities;
 import org.map.zk.database.dao.*;
@@ -30,7 +29,6 @@ import org.zkoss.zul.Listitem;
 import org.zkoss.zul.ListitemRenderer;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
-
 import commonlibs.commonclasses.CLanguage;
 import commonlibs.commonclasses.ConstantsCommonClasses;
 import commonlibs.extendedlogger.CExtendedConfigLogger;
@@ -41,7 +39,7 @@ public class CManagerController extends SelectorComposer<Component> {
     
     private static final long serialVersionUID = 5931956523173112752L;
     
-    protected ListModelList<TBLPerson> datamodelpersona = null; //new ListModelList<TBLPerson>();
+    protected ListModelList<TBLPerson> datamodelpersona = null;
     
     @Wire
     Button buttonClose;
@@ -79,34 +77,46 @@ public class CManagerController extends SelectorComposer<Component> {
             
             try {
                 
-                Listcell cell = new Listcell();// Se crea una nueva celda
-                cell.setLabel( persona.getID() );// Se le asigna un valor a
-                                                 // la// celda
-                listitem.appendChild( cell );// Se añade la celda a la lista
-                cell = new Listcell();// Se crea una nueva celda
-                cell.setLabel( persona.getFirstName() );// Se le asigna un valor a
-                                                        // la// celda
-                listitem.appendChild( cell );// Se añade la celda a la lista
-                cell = new Listcell();// Se crea una nueva celda
-                cell.setLabel( persona.getLastName() );// Se le asigna un valor a
-                                                       // la// celda
-                listitem.appendChild( cell );// Se añade la celda a la lista                
-                cell = new Listcell();// Se crea una nueva celda
-                cell.setLabel( persona.getGender() == 0 ? "Female" : "Male" );// Se le asigna un valor a
-                // la celda                
-                listitem.appendChild( cell );// Se añade la celda a la lista
-                cell = new Listcell();// Se crea una nueva celda
-                cell.setLabel( persona.getBirthdate().toString() );// Se le asigna un valor a
-                // la celda
-                listitem.appendChild( cell );// Se añade la celda a la lista
-                cell = new Listcell();// Se crea una nueva celda
-                cell.setLabel( persona.getComment() );// Se le asigna un valor a
-                                                      // la// celda
-                listitem.appendChild( cell );// Se añade la celda a la lista
+                Listcell cell = new Listcell();
+                
+                cell.setLabel( persona.getID() );
+                
+                listitem.appendChild( cell );
+                
+                cell = new Listcell();
+                
+                cell.setLabel( persona.getFirstName() );
+                
+                listitem.appendChild( cell );
+                
+                cell = new Listcell();
+                cell.setLabel( persona.getLastName() );
+                
+                listitem.appendChild( cell );
+                
+                cell = new Listcell();
+                
+                cell.setLabel( persona.getGender() == 0 ? "Female" : "Male" );
+                
+                listitem.appendChild( cell );
+                
+                cell = new Listcell();
+                
+                cell.setLabel( persona.getBirthdate().toString() );
+                
+                listitem.appendChild( cell );
+                
+                cell = new Listcell();
+                
+                cell.setLabel( persona.getComment() );
+                                                      
+                listitem.appendChild( cell );
                 
             }
             catch ( Exception ex ) {
+                
                 ex.printStackTrace();
+                
             }
             
         }
@@ -120,16 +130,19 @@ public class CManagerController extends SelectorComposer<Component> {
         TBLUser operatorCredential = ( TBLUser ) currentSession.getAttribute( SystemConstants._Operator_Credential_Session_Key );
         
         String strOperator = SystemConstants._Operator_Unknown;
+        
         String strLoginDateTime = ( String ) currentSession.getAttribute( SystemConstants._Login_Date_Time_Session_Key );
+        
         String strLogPath = ( String ) currentSession.getAttribute( SystemConstants._Log_Path_Session_Key );
         
-        if ( operatorCredential != null )
+        if ( operatorCredential != null )            
             strOperator = operatorCredential.getName();
         
         if ( strLoginDateTime == null )
             strLoginDateTime = Utilities.getDateInFormat( ConstantsCommonClasses._Global_Date_Time_Format_File_System_24, null );
         
         final String strLoggerName = SystemConstants._Person_Manager_Controller_Logger_Name;
+        
         final String strLoggerFileName = SystemConstants._Person_Manager_Controller_File_Log;
         
         controllerLogger = CExtendedLogger.getLogger( strLoggerName + " " + strOperator + " " + strLoginDateTime );
@@ -173,25 +186,13 @@ public class CManagerController extends SelectorComposer<Component> {
         
         try {
             super.doAfterCompose( comp );
+            
             final String strRunningpath = Sessions.getCurrent().getWebApp().getRealPath( SystemConstants._WEB_INF_DIR );
             
             initcontrollerLoggerAndcontrollerLanguage( strRunningpath, Sessions.getCurrent() );
-            
-            //listboxPersons.setModel( datamodelpersona );
-            
-            //listboxPersons.setItemRenderer( new MyRenderer() );
-            
-           // Session sesion = Sessions.getCurrent();//Se crea variable sesion
-            
+                        
             controllerLogger = ( CExtendedLogger ) Sessions.getCurrent().getWebApp().getAttribute( ConstantsCommonClasses._Webapp_Logger_App_Attribute_Key );
-            
-            /*if ( sesion.getAttribute( SystemConstants._DB_Connection_Session_Key ) instanceof CDatabaseConnection ) {
-                
-                database = ( CDatabaseConnection ) sesion.getAttribute( SystemConstants._DB_Connection_Session_Key );
-                
-                buttonConnection.setLabel( "Desconectar" );
-                
-            } */
+                        
             listboxPersons.setMultiple( true );
             
             Events.echoEvent( "onClick", buttonLoad, null );
@@ -208,20 +209,20 @@ public class CManagerController extends SelectorComposer<Component> {
     @Listen( "onClick=#buttonLoad" )
     public void onClickbuttoncargar( Event event ) {
         
-        listboxPersons.setModel( ( ListModelList<?> ) null );//Se limpia la listbox
+        listboxPersons.setModel( ( ListModelList<?> ) null );
         
-        Session sesion = Sessions.getCurrent();//Se recupera la sesión
+        Session sesion = Sessions.getCurrent();
         
-        if ( sesion.getAttribute( SystemConstants._DB_Connection_Session_Key ) instanceof CDatabaseConnection ) {//Si se está conectado
+        if ( sesion.getAttribute( SystemConstants._DB_Connection_Session_Key ) instanceof CDatabaseConnection ) {
             
-            database = ( CDatabaseConnection ) sesion.getAttribute( SystemConstants._DB_Connection_Session_Key );//Se asigna la dirección de la bd
+            database = ( CDatabaseConnection ) sesion.getAttribute( SystemConstants._DB_Connection_Session_Key );
             
-            List<TBLPerson> listData = PersonDAO.loadAllData( database, controllerLogger, controllerLanguage );//Se llama al método de búsqueda y se asigna a la lista de persona        
+            List<TBLPerson> listData = PersonDAO.loadAllData( database, controllerLogger, controllerLanguage );        
             
-            datamodelpersona = new ListModelList<TBLPerson>( listData );//Se crea un nuevo modelo con la lista de personas
+            datamodelpersona = new ListModelList<TBLPerson>( listData );
             
             
-            listboxPersons.setModel( datamodelpersona );//se le asigna al listbox
+            listboxPersons.setModel( datamodelpersona );
             
             listboxPersons.setItemRenderer( ( new MyRenderer() ) );
             
@@ -234,70 +235,14 @@ public class CManagerController extends SelectorComposer<Component> {
         windowManager.detach(); 
         
     }
-    /*@Listen( "onClick=#buttonconnection" )
-    public void onClickbuttonconnection( Event event ) {
-        
-        Session sesion = Sessions.getCurrent();
-        if ( database == null ) {//Si se va a conectar            
-            database = new CDatabaseConnection();//Se instancia     
-            CDatabaseConnectionConfig databaseconnectionconfig = new CDatabaseConnectionConfig();//Se instancia una variable de clase databaseconnectionconfig
-            String strRunningPath = Sessions.getCurrent().getWebApp().getRealPath( SystemConstants._WEB_INF_DIR ) + File.separator + SystemConstants._CONFIG_DIR + File.separator; //Se asigna a una cadena la dirección la carpeta del archivo del archivo
-            
-            if ( databaseconnectionconfig.LoadConfig( strRunningPath + File.separator + SystemConstants._DATABASE_CONFIG_FILE, controllerLogger, controllerLanguage ) ) {//Se selecciona el archivo y se carga la configuración                                     
-                if ( database.makeConnectionToDatabase( databaseconnectionconfig, controllerLogger, controllerLanguage ) ) {//Si se logra conectar
-                    database.setDatabaseConnectionConfig( databaseconnectionconfig, controllerLogger, controllerLanguage );
-                    sesion.setAttribute( SystemConstants._DB_Connection_Session_Key, database );//Se crea la sesión
-                    buttonConnection.setLabel( "Desconectar" );//Se cambia el contexto                
-                    Messagebox.show( "       ¡Conexión exitosa!.", "Aceptar", Messagebox.OK, Messagebox.EXCLAMATION );//Mensaje de exito
-                    Events.echoEvent( "onClick", buttonLoad, null );
-                }
-                else 
-                {
-                    
-                    Messagebox.show( "       ¡Conexión fallida!.", "Aceptar", Messagebox.OK, Messagebox.EXCLAMATION );//Mensaje de fracaso
-                    
-                }
-                
-            }
-            
-            else {
-                
-                Messagebox.show( "       ¡Error al leer el archivo de configuración!.", "Aceptar", Messagebox.OK, Messagebox.EXCLAMATION );//Mensaje de fracaso
-                
-            }
-        }
-        else {//Si se va a desconectar
-            if ( database != null ) {//Si la variable no es nula
-                sesion.setAttribute( SystemConstants._DB_Connection_Session_Key, null );//Se limpia la sesión
-                buttonConnection.setLabel( "Conectar" );//Se cambia el contexto
-                
-                if ( database.closeConnectionToDB( controllerLogger, controllerLanguage ) ) {//Se cierra la conexión
-                    database = null;
-                    Messagebox.show( "       ¡Conexión cerrada!.", "Aceptar", Messagebox.OK, Messagebox.EXCLAMATION );
-                    listboxPersons.setModel( ( ListModelList<?> ) null );//Se limpia la listbox
-                }
-                else {
-                    Messagebox.show( "       ¡Fallo al cerrar conexión!.", "Aceptar", Messagebox.OK, Messagebox.EXCLAMATION );
-                }
-            }
-            else {
-                Messagebox.show( "       ¡No estás conectado!.", "Aceptar", Messagebox.OK, Messagebox.EXCLAMATION );
-            }
-        }
-    } */
     
     @Listen( "onClick=#buttonAdd" )
     public void onClickbuttonadd( Event event ) {
         
-        //TBLPerson vacio = new TBLPerson();//Esto solía tener un constructor con parámetros
-        //listboxPersons.setSelectedIndex( -1 );
-       // Map<String, Object> arg = new HashMap<String, Object>();
-
-        /* arg.put( "buttonadd", buttonAdd );
-        arg.put( "buttonmodify", buttonModify );
-        arg.put( "ModifyModel", datamodelpersona );*/
         Map<String, Object> arg = new HashMap<String, Object>();
-        arg.put( "listboxPersons", listboxPersons );       
+        
+        arg.put( "listboxPersons", listboxPersons );
+        
         Window win = ( Window ) Executions.createComponents( "/views/person/editor/editor.zul", null, arg );
         
         win.doModal();
@@ -308,100 +253,87 @@ public class CManagerController extends SelectorComposer<Component> {
     public void onClickbuttonmodify( Event event ) {
         
         if ( listboxPersons.getSelectedIndex() >= 0 ) {
-            Set<TBLPerson> selecteditems = datamodelpersona.getSelection();//Se crea una lista de personas con los elementos seleccionados
-            if ( ( selecteditems != null ) && ( datamodelpersona.getSelection().size() > 0 ) ) {//Si hay elementos
+            
+            Set<TBLPerson> selecteditems = datamodelpersona.getSelection();
+            
+            if ( ( selecteditems != null ) && ( datamodelpersona.getSelection().size() > 0 ) ) {
+                
                 TBLPerson person = selecteditems.iterator().next();
+                
                 Map<String, Object> arg = new HashMap<String, Object>();
-               /* arg.put( "personToModify", person );
-                arg.put( "buttonadd", buttonAdd );*/
+                               
                 arg.put( "listboxPersons", listboxPersons);
+                
                 arg.put( "PersonaCi", person.getID() );
+                
                 Window win = ( Window ) Executions.createComponents( "/views/person/editor/editor.zul", null, arg );
+                
                 win.doModal();
             }
-            else { //sino
+            else { 
                 
                 Messagebox.show( "       Error, nothing selected.", "Aceptar", Messagebox.OK, Messagebox.EXCLAMATION );
-                
-                //Se da un mensaje de error
+                                
             }
         }
         else {
             
             Messagebox.show( "       Error, nothing selected.", "Aceptar", Messagebox.OK, Messagebox.EXCLAMATION );
             
-            //Se da un mensaje de error
         }
     }
    
     @Listen( "onKek=#listboxPersons" )
     public void onDialogFinishbuttonmodify( Event event ) {
-        
-       /* TBLPerson personToModif = ( TBLPerson ) event.getData();
-        int index = listboxPersons.getSelectedIndex();
-        if ( index >= 0 ) {
-            datamodelpersona.remove( index );
-            datamodelpersona.add( index, personToModif );
-            listboxPersons.setModel( datamodelpersona );
-            listboxPersons.setItemRenderer( ( new MyRenderer() ) );
-            PersonDAO.updateData( database, personToModif, controllerLogger, controllerLanguage );
-            Messagebox.show( "       The person was modified!.", "Aceptar", Messagebox.OK, Messagebox.EXCLAMATION );
-            Events.echoEvent( "onClick", buttonLoad, null );
-        }
-        else {
-            PersonDAO.insertData( database, personToModif, controllerLogger, controllerLanguage );
-            datamodelpersona.add( personToModif );
-            listboxPersons.setModel( datamodelpersona );
-            listboxPersons.setItemRenderer( ( new MyRenderer() ) );
-            Messagebox.show( "       Person added!.", "Aceptar", Messagebox.OK, Messagebox.EXCLAMATION );
-            Events.echoEvent( "onClick", buttonLoad, null );
-        }*/
-        
+                
         Events.echoEvent( "onClick", buttonLoad, null );
+        
     }
     
     @SuppressWarnings( { "rawtypes", "unchecked" } )
     @Listen( "onClick=#buttonDelete" )
-    public void onClickbuttondelete( Event event ) {//Si se hace click en el botón borrar
+    public void onClickbuttondelete( Event event ) {
         
         if ( listboxPersons.getSelectedIndex() >= 0 ) {
-            Set<TBLPerson> selecteditems = datamodelpersona.getSelection();//Se crea una lista de personas con los elementos seleccionados
+            
+            Set<TBLPerson> selecteditems = datamodelpersona.getSelection();
+            
             if ( ( selecteditems != null ) && ( datamodelpersona.getSelection().size() > 0 ) ) {
 
-                String buffer = null;//Se crea un buffer
+                String buffer = null;
                 
-                for ( TBLPerson persona : selecteditems ) {//Por cada persona seleccionada
+                for ( TBLPerson persona : selecteditems ) {
                     
-                    if ( buffer == null ) {//Si el buffer está vacío
+                    if ( buffer == null ) {
                         
-                        buffer = persona.getID() + " " + persona.getFirstName() + " " + persona.getLastName() + " ";//Se toma el primer elemento
+                        buffer = persona.getID() + " " + persona.getFirstName() + " " + persona.getLastName() + " ";
                         
                     }
-                    else {//sino
+                    else {
                         
-                        buffer = buffer + "\n" + persona.getID() + " " + persona.getFirstName() + " " + persona.getLastName() + " ";//se toman el siguiente        
+                        buffer = buffer + "\n" + persona.getID() + " " + persona.getFirstName() + " " + persona.getLastName() + " ";        
                         
-                    }//fin si
+                    }
                     
-                }//fin por
-                Messagebox.show( "Are you sure you wish to delete the following" + Integer.toString( selecteditems.size() ) + " selected elements? \n" + buffer, "Confirm Dialog", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new org.zkoss.zk.ui.event.EventListener() {//Validación
+                }
+                Messagebox.show( "Are you sure you wish to delete the following" + Integer.toString( selecteditems.size() ) + " selected elements? \n" + buffer, "Confirm Dialog", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new org.zkoss.zk.ui.event.EventListener() {
                     
                     public void onEvent( Event evt ) throws InterruptedException {
                         
-                        if ( evt.getName().equals( "onOK" ) ) { //Si la respuesta es sí
-                            alert( "Elements erased!" ); //Se da un aviso
+                        if ( evt.getName().equals( "onOK" ) ) {
                             
-                            while ( selecteditems.iterator().hasNext() ) {//mientras haya elementos seleccionados
+                            alert( "Elements erased!" ); 
+                            
+                            while ( selecteditems.iterator().hasNext() ) {
                                 
-                                TBLPerson persona = selecteditems.iterator().next();//se toma el elemento
-                                //selecteditems.iterator().remove();
+                                TBLPerson persona = selecteditems.iterator().next();
                                 
                                 PersonDAO.deleteData( database, persona.getID(), controllerLogger, controllerLanguage );
                                 
                                 Events.echoEvent( "onClick", buttonLoad, null );
-                                //datamodelpersona.remove( persona );//Se destruye
-                            }//fin mientras
-                        }//fin si
+
+                            }
+                        }
                     }
                 } );
             }
@@ -409,8 +341,7 @@ public class CManagerController extends SelectorComposer<Component> {
             else {
 
                 Messagebox.show( "       Error, nothing selected.", "Ok", Messagebox.OK, Messagebox.EXCLAMATION );
-                
-                //Se da un mensaje de error
+                                
             }
             
         }
@@ -419,7 +350,6 @@ public class CManagerController extends SelectorComposer<Component> {
             
             Messagebox.show( "       Error, nothing selected.", "Ok", Messagebox.OK, Messagebox.EXCLAMATION );
             
-        }
-        
+        }        
     }
 }
