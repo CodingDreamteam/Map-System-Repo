@@ -155,7 +155,7 @@ public class CEditorController extends SelectorComposer<Component> {
         
     }
     
-    public void doAfterCompose( Component comp ) { //
+    public void doAfterCompose( Component comp ) {
         
         try {
             super.doAfterCompose( comp );
