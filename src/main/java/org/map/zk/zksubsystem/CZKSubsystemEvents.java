@@ -59,7 +59,7 @@ public class CZKSubsystemEvents implements DesktopInit, DesktopCleanup, SessionI
             
             CExtendedConfigLogger configLogger = new CExtendedConfigLogger();
             
-            String strConfigPath = strRunningPath + SystemConstants._CONFIG_DIR + File.separator + SystemConstants._Logger_Config_Name;
+            String strConfigPath = strRunningPath + SystemConstants._CONFIG_DIR + SystemConstants._Logger_Config_Name;
             
             if (configLogger.loadConfig( strConfigPath, null, null )){
                 

@@ -20,7 +20,7 @@ public class SystemConstants {
 	
 	public static final String _WEB_INF_DIR = "WEB-INF";
 	
-	public static final String _CONFIG_DIR = "config";
+	public static final String _CONFIG_DIR = "config" + File.separator;
 	
 	public static final String _DATABASE_CONFIG_FILE = "database.config.xml";
 	
