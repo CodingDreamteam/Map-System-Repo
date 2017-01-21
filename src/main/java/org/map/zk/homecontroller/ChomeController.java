@@ -1,7 +1,10 @@
 package org.map.zk.homecontroller;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
+
 //
 import org.map.zk.systemconstans.SystemConstants;
 import org.map.zk.utilities.SystemUtilities;
@@ -17,6 +20,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Tabbox;
+import org.zkoss.zul.Window;
 
 import commonlibs.commonclasses.CLanguage;
 import commonlibs.commonclasses.ConstantsCommonClasses;
@@ -131,6 +135,23 @@ public class ChomeController extends SelectorComposer<Component> {
             controllerLogger.logMessage( "1" , CLanguage.translateIf( controllerLanguage, "Button change password clicked" ) );
         
     }    
+    
+    @Listen ("onClick= #buttonManager")
+    public void onClickbuttonPersonManager (Event event) { 
+     
+        if ( controllerLogger != null )
+            controllerLogger.logMessage( "1", CLanguage.translateIf( controllerLanguage, "Button person manager clicked" ) );  
+        
+        Map<String,Object> params = new HashMap<String, Object>();
+        
+        params.put( "callerComponent", event.getTarget() );
+        
+        Window win = (Window) Executions.createComponents( "/views/person/manager/manager.zul", null, params );
+        
+        win.doModal();
+        
+    }
+    
     
     @SuppressWarnings( { "unchecked", "rawtypes" } )
     @Listen( "onClick = #includeNorthContent #buttonLogout" )  

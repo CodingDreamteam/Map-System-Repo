@@ -62,7 +62,7 @@ public class CManagerController extends SelectorComposer<Component> {
     Listbox listboxPersons;
     
     @Wire
-    Window windowmanager;
+    Window windowManager;
     
     protected Execution execution = Executions.getCurrent();
     
@@ -92,7 +92,7 @@ public class CManagerController extends SelectorComposer<Component> {
                                                        // la// celda
                 listitem.appendChild( cell );// Se añade la celda a la lista                
                 cell = new Listcell();// Se crea una nueva celda
-                cell.setLabel( persona.getGender() == 0 ? "Femenino" : "Masculino" );// Se le asigna un valor a
+                cell.setLabel( persona.getGender() == 0 ? "Female" : "Male" );// Se le asigna un valor a
                 // la celda                
                 listitem.appendChild( cell );// Se añade la celda a la lista
                 cell = new Listcell();// Se crea una nueva celda
@@ -231,7 +231,7 @@ public class CManagerController extends SelectorComposer<Component> {
     @Listen( "onClick=#buttonClose" )
     public void onClickbuttonClose ( Event event ) {
         
-      listboxPersons.detach(); 
+        windowManager.detach(); 
         
     }
     /*@Listen( "onClick=#buttonconnection" )
@@ -286,23 +286,25 @@ public class CManagerController extends SelectorComposer<Component> {
         }
     } */
     
-    @Listen( "onClick=#buttonadd" )
+    @Listen( "onClick=#buttonAdd" )
     public void onClickbuttonadd( Event event ) {
         
         //TBLPerson vacio = new TBLPerson();//Esto solía tener un constructor con parámetros
         //listboxPersons.setSelectedIndex( -1 );
        // Map<String, Object> arg = new HashMap<String, Object>();
- /*       arg.put( "personToModify", vacio );
-        arg.put( "buttonadd", buttonAdd );
+
+        /* arg.put( "buttonadd", buttonAdd );
         arg.put( "buttonmodify", buttonModify );
         arg.put( "ModifyModel", datamodelpersona );*/
-        Window win = ( Window ) Executions.createComponents( "/views/person/editor/editor.zul", null, null );
+        Map<String, Object> arg = new HashMap<String, Object>();
+        arg.put( "listboxPersons", listboxPersons );       
+        Window win = ( Window ) Executions.createComponents( "/views/person/editor/editor.zul", null, arg );
         
         win.doModal();
         
     }
     
-    @Listen( "onClick=#buttonmodify" )
+    @Listen( "onClick=#buttonModify" )
     public void onClickbuttonmodify( Event event ) {
         
         if ( listboxPersons.getSelectedIndex() >= 0 ) {
@@ -312,7 +314,7 @@ public class CManagerController extends SelectorComposer<Component> {
                 Map<String, Object> arg = new HashMap<String, Object>();
                /* arg.put( "personToModify", person );
                 arg.put( "buttonadd", buttonAdd );*/
-                arg.put( "buttonmodify", buttonModify );
+                arg.put( "listboxPersons", listboxPersons);
                 arg.put( "PersonaCi", person.getID() );
                 Window win = ( Window ) Executions.createComponents( "/views/person/editor/editor.zul", null, arg );
                 win.doModal();
@@ -331,8 +333,8 @@ public class CManagerController extends SelectorComposer<Component> {
             //Se da un mensaje de error
         }
     }
-    
-    @Listen( "onKek=#buttonmodify" )
+   
+    @Listen( "onKek=#listboxPersons" )
     public void onDialogFinishbuttonmodify( Event event ) {
         
        /* TBLPerson personToModif = ( TBLPerson ) event.getData();
@@ -359,7 +361,7 @@ public class CManagerController extends SelectorComposer<Component> {
     }
     
     @SuppressWarnings( { "rawtypes", "unchecked" } )
-    @Listen( "onClick=#buttondelete" )
+    @Listen( "onClick=#buttonDelete" )
     public void onClickbuttondelete( Event event ) {//Si se hace click en el botón borrar
         
         if ( listboxPersons.getSelectedIndex() >= 0 ) {
