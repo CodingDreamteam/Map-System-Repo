@@ -106,7 +106,7 @@ public class ChomeController extends SelectorComposer<Component> {
     public void doAfterCompose( Component comp ) {
         
         try {
-            
+            //
             super.doAfterCompose( comp );
             
             final String strRunningPath = Sessions.getCurrent().getWebApp().getRealPath( SystemConstants._WEB_INF_DIR ) + File.separator;
