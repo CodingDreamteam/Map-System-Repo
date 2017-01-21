@@ -14,7 +14,7 @@
             </listhead>
             </listbox>
             <div id="buttoncontainer">
-                <button id="buttonClose" label="Close"></button>
+                <button id="buttonClose" label="Close"></button> <!--  -->
                 <button id="buttonLoad" label="Load"></button>
                 <button id="buttonDelete" label="Delete" style="float:right;margin-left:15px"></button>
                 <button id="buttonModify" label="Modify" style="float:right;margin-left:15px"></button>
