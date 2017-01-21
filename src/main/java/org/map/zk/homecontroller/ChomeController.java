@@ -7,6 +7,7 @@ import org.map.zk.systemconstans.SystemConstants;
 import org.map.zk.utilities.SystemUtilities;
 import org.map.zk.database.datamodel.TBLUser;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
@@ -14,6 +15,7 @@ import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Label;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Tabbox;
 
 import commonlibs.commonclasses.CLanguage;
@@ -128,4 +130,47 @@ public class ChomeController extends SelectorComposer<Component> {
         
     }
     
-}
+    @Listen( "onClick = #includeNorthContent #buttonChangePassword" )  
+    public void onClickbuttonChangePassword( Event event ) {
+
+        if ( controllerLogger != null )
+            controllerLogger.logMessage( "1" , CLanguage.translateIf( controllerLanguage, "Button change password clicked" ) );
+        
+    }    
+    
+    @SuppressWarnings( { "unchecked", "rawtypes" } )
+    @Listen( "onClick = #includeNorthContent #buttonLogout" )  
+    public void onClickbuttonLogout( Event event ) {
+        
+        if ( controllerLogger != null )
+            controllerLogger.logMessage( "1" , CLanguage.translateIf( controllerLanguage, "Button change password clicked" ) );
+        
+        Messagebox.show( "You are sure do you want logout from system?", "Logout", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new org.zkoss.zk.ui.event.EventListener() {
+            
+            public void onEvent(Event evt) throws InterruptedException {
+                
+                if ( evt.getName().equals( "onOK" ) ) {
+                    
+                    if ( controllerLogger != null )
+                        controllerLogger.logMessage( "1" , CLanguage.translateIf( controllerLanguage, "Logout confirm accepted" ) );
+                    
+                    //Ok aquí vamos hacer el logout
+                    Sessions.getCurrent().invalidate(); //Listo obliga limpiar la sessión mejor que ir removeAttribute a removeAttribute
+                   
+                    Executions.sendRedirect( "/index.zul"); //Lo enviamos al login
+                    
+                }
+                else {
+                    
+                    if ( controllerLogger != null )
+                        controllerLogger.logMessage( "1" , CLanguage.translateIf( controllerLanguage, "Logout confirm canceled" ) );
+                    
+                }
+                
+            }
+            
+        });         
+        
+       }
+    
+      }
