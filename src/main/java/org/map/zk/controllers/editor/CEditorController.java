@@ -155,7 +155,9 @@ public class CEditorController extends SelectorComposer<Component> {
                
              dbConnection = (CDatabaseConnection) currentSession.getAttribute( SystemConstants._DB_Connection_Session_Key );
              
-               if (execution.getArg().get( "PersonaCi" ) instanceof String ){
+              personToModify = new TBLPerson(); 
+             
+             if (execution.getArg().get( "PersonaCi" ) instanceof String ){
                  
                    personToModify = PersonDAO.loadData( dbConnection, PersonaCi, controllerLogger, controllerLanguage ); 
                  
