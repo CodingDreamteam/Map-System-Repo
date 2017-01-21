@@ -1,5 +1,6 @@
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 <?link rel="stylesheet" type="text/css" href="../../resources/styles/home.style.css"?>
+<?init class="org.map.zk.security.CSecurity"?>
 <zk>
 
   <borderlayout id="homeLayout" apply="" vflex="1">

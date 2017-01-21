@@ -1,6 +1,7 @@
 <?page title="Manager" contentType="text/html;charset=UTF-8"?>
+<?init class="org.map.zk.security.CSecurity"?>
 <zk>
-    <window id="windowManager" xmlns:w="client" position="center, center" apply="" title="Persona" border="normal" hflex="min" width="360px">
+    <window id="windowManager" xmlns:w="client" position="center, center" apply="org.map.zk.controllers.manager.CManagerController" title="Persona" border="normal" hflex="min" width="360px">
         <vlayout width="710px">
             <listbox id="listboxPersons" width="100%" height="360px">
             <listhead width="100%" height="100%">

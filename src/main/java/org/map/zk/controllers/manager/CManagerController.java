@@ -189,7 +189,7 @@ public class CManagerController extends SelectorComposer<Component> {
         }
         catch ( Exception e ) {
             e.printStackTrace();
-        }//
+        }
     }
     
     @Listen( "onClick=#buttonLoad" )
