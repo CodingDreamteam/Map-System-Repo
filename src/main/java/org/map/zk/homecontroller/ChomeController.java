@@ -34,7 +34,7 @@ public class ChomeController extends SelectorComposer<Component> {
     
     @Wire( "#includeNorthContent #labelHeader" )
     Label labelHeader;
-    
+       
     @Wire
     Tabbox tabboxMainContent;
     
